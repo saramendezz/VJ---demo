@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638482372216174472
+      ticks: 638482381666544377
     m_Hash: 2748323826
   m_LockFileStatus:
     m_FilePath: C:/Users/roger/repos/fib-upc/VJ---demo/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638482372216174472
+      ticks: 638482381666544377
     m_Hash: 2520203705
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
