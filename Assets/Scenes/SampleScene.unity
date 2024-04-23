@@ -169,6 +169,7 @@ MonoBehaviour:
   speed: 6
   rb: {fileID: 336051498}
   laneDistance: 2
+  jumpForce: 7
 --- !u!54 &336051498
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -615,6 +616,7 @@ MonoBehaviour:
   speed: 7.2
   rb: {fileID: 1497501919}
   laneDistance: 4
+  jumpForce: 7
 --- !u!1001 &2014931238
 PrefabInstance:
   m_ObjectHideFlags: 0

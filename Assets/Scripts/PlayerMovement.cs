@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     public float laneDistance = 2; // distance between lanes
+    public float jumpForce = 7f;
+    private bool isGrounded = true;
 
     void FixedUpdate()
     {
@@ -21,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 1.1f);
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //Mathf.Clamp(value, min, max)
@@ -30,7 +33,10 @@ public class PlayerMovement : MonoBehaviour
         {
             desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
         }
-        Debug.Log("Desired Lane: " + desiredLane + ", Lane X Position: " + GetLanePosition());
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
         if (transform.position.y < -5)
         {
             Die();
