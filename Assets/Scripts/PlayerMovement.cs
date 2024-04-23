@@ -1,50 +1,56 @@
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     bool alive = true;
-    public float speed = 5;
+    public float speed = 6;
     public Rigidbody rb;
-    private int desiredLane = 1; //0: left 1:middle 2:right
-    public float laneDistance = 4; //distance between two lanes
+    private int desiredLane = 1; // 0: left, 1: middle, 2: right
+    public float laneDistance = 2; // distance between lanes
 
-    float horizontalInput;
-    public float horizontalMultiplier = 1.5f;
-
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (!alive) return;
 
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+        Vector3 targetPosition = rb.position + forwardMove;
+        targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+        rb.MovePosition(targetPosition);
     }
-    private void Update()
+
+    void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        if (Input.GetKeyDown(KeyCode.RightArrow)) 
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            desiredLane++;
-            if (desiredLane == 3) desiredLane--;4556
+            //Mathf.Clamp(value, min, max)
+            desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2); // Prevents exceeding lane bounds
         }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
+        }
+        Debug.Log("Desired Lane: " + desiredLane + ", Lane X Position: " + GetLanePosition());
         if (transform.position.y < -5)
         {
             Die();
         }
     }
 
+    float GetLanePosition()
+    {
+        // Calculate X position based on desired lane
+        return (desiredLane - 1) * laneDistance;
+    }
+
     public void Die()
     {
         alive = false;
-        //Restart game
-        Invoke("Restart", 2);
+        Invoke("Restart", 2); // Delay before restarting
     }
 
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 }
