@@ -147,7 +147,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
@@ -246,8 +246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4e9b99ed8fd7d94f9a1eefb2c141f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTile001: {fileID: 8796865450041279733, guid: a1182481444cfdf42bbda532a3d39712, type: 3}
+  groundTile001: {fileID: 8796865450041279733, guid: 79952442eb8112643b10b5fc29b8c615, type: 3}
   groundTile002: {fileID: 8796865450041279733, guid: c74bb45c2efda75428ecf364586bbe91, type: 3}
+  groundTileStart001: {fileID: 8796865450041279733, guid: 9fb321db8a662f84ca25a7b422b09633, type: 3}
+  groundTileStart002: {fileID: 8796865450041279733, guid: 5f403b03d2ae16d43b4091dd3d3cb9e0, type: 3}
 --- !u!4 &789091816
 Transform:
   m_ObjectHideFlags: 0

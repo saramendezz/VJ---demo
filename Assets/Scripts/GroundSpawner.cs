@@ -4,6 +4,8 @@ public class GroundSpawner : MonoBehaviour
 {
     public GameObject groundTile001;
     public GameObject groundTile002;
+    public GameObject groundTileStart001;
+    public GameObject groundTileStart002;
     private int currentId, countId;
     private const int MAX_NUM_GROUND = 3, MAX_NUM_ITER = 20; 
     Vector3 nextSpawnPoint;
@@ -35,10 +37,15 @@ public class GroundSpawner : MonoBehaviour
     void Start()
     {
         currentId = 1; countId = 0;
+        GameObject tmp;
+        tmp = Instantiate(groundTileStart001, nextSpawnPoint, Quaternion.identity);
+        nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
+        tmp = Instantiate(groundTileStart002, nextSpawnPoint, Quaternion.identity);
+        nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
+
         for (int i = 0; i < 15; i++)
         {
             SpawnTile();
         }
-
     }
 }
