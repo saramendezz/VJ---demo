@@ -355,6 +355,7 @@
 "Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/Coin.cs"
 "Assets/Scripts/EscapistMovement.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/GroundSpawner.cs"
 "Assets/Scripts/GroundTile.cs"
 "Assets/Scripts/Obstacle.cs"

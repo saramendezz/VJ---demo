@@ -40,27 +40,16 @@ public class GroundTile : MonoBehaviour
 
     void SpawnCoins()
     {
-        int coinsToSpawn = 5;
+        int coinsToSpawn = 10;
         for (int i = 0; i < coinsToSpawn; i++)
         {
-            GameObject temp = Instantiate(coinPrefab);
-            temp.transform.position = GetRandomPoint(GetComponent<Collider>());
-        }
-    }
+            int coinSpawnIndex = Random.Range(1, 4);
+            Transform spawnPoint = transform.GetChild(coinSpawnIndex);
 
-    Vector3 GetRandomPoint(Collider collider)
-    {
-        Vector3 point = new Vector3(
-            Random.Range(collider.bounds.min.x, collider.bounds.max.x),
-            Random.Range(collider.bounds.min.y, collider.bounds.max.y),
-            Random.Range(collider.bounds.min.z, collider.bounds.max.z)
-        );
-        if (point != collider.ClosestPoint(point))
-        {
-            point = GetRandomPoint(collider);
+            Vector3 coinPosition = spawnPoint.position;
+            if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x + 1;
+            else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x - 1;
+            Instantiate(coinPrefab, coinPosition, Quaternion.identity, transform);
         }
-
-        point.y = 1;
-        return point;
     }
 }

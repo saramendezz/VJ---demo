@@ -7,6 +7,7 @@ public class Coin : MonoBehaviour
     public float turnSpeed = 90f;
     private void OnTriggerEnter(Collider other)
     {
+        
         //Check if we collide with the player
         if (other.gameObject.name != "Player")
         {
@@ -14,6 +15,7 @@ public class Coin : MonoBehaviour
         }
 
         //Add to the player's score
+        GameManager.inst.IncrementScore();
 
         //Destroy the coin
         Destroy(gameObject);
