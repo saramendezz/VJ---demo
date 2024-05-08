@@ -3,7 +3,22 @@ guid: 049d432ee7ba2f2448109fda5bb6fdc2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 8rgb_material
+    second: {fileID: 2100000, guid: 63c46d7017132f74985949befda6d75a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UV_Side_Mat.001
+    second: {fileID: 2100000, guid: 2ca1ef83b4fc2714fae6c408c77feeb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UV_ground_Mat
+    second: {fileID: 2100000, guid: c1b9c2ddd94bb5d478c644d1596654a7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

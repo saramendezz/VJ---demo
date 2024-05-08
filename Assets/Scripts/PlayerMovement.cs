@@ -203,6 +203,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void rotatePlayer(float rotation)
+    {
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(0, rotation, 0));
+    }
+
     void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

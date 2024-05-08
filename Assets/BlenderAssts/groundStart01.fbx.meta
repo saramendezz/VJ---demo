@@ -3,7 +3,17 @@ guid: 7a2f6a9ccdcf7ca409a965968bb5c54c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 8rgb_material
+    second: {fileID: 2100000, guid: 63c46d7017132f74985949befda6d75a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UV_ground_Mat.002
+    second: {fileID: 2100000, guid: c1b9c2ddd94bb5d478c644d1596654a7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

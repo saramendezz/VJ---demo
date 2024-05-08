@@ -42,6 +42,7 @@ public class TurnTile : MonoBehaviour
             {
                 groundSpawner.endDoubleDirection(0);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
+                playerMovement.rotatePlayer(90f);
                 switch (currentDirection)
                 {
                     case Directions.FOWARD:
@@ -64,6 +65,7 @@ public class TurnTile : MonoBehaviour
             {
                 groundSpawner.endDoubleDirection(1);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
+                playerMovement.rotatePlayer(-90f);
                 switch (currentDirection)
                 {
                     case Directions.FOWARD:

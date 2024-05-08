@@ -120,8 +120,14 @@ public class GroundSpawner : MonoBehaviour
     {
         isDoubleDirection = false;
         if (directionRemoved == 0)
+        {
             for (int i = 0; i < turnGroundTilesRight.Count; i++) turnGroundTilesRight.RemoveAt(i);
+        }
         else
+        {
             for (int i = 0; i < turnGroundTilesLeft.Count; i++) turnGroundTilesLeft.RemoveAt(i);
+            currentRotation = currentDobleRotation;
+            nextSpawnPoint = nextDoblePoint;
+        }
     }
 }
