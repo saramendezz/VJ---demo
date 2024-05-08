@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -522,7 +522,7 @@ MonoBehaviour:
   groundTile002: {fileID: 8796865450041279733, guid: c74bb45c2efda75428ecf364586bbe91, type: 3}
   groundTileStart001: {fileID: 8796865450041279733, guid: 9fb321db8a662f84ca25a7b422b09633, type: 3}
   groundTileStart002: {fileID: 8796865450041279733, guid: 5f403b03d2ae16d43b4091dd3d3cb9e0, type: 3}
-  groundTurn: {fileID: 0}
+  groundTurn: {fileID: 8796865450041279733, guid: a1182481444cfdf42bbda532a3d39712, type: 3}
 --- !u!4 &789091816
 Transform:
   m_ObjectHideFlags: 0
@@ -816,7 +816,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -50}
+  m_AnchoredPosition: {x: 90, y: 0}
   m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1120466598

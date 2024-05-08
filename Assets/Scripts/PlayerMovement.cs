@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayableDirector timeline;
     public CapsuleCollider box;
 
-    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0005f;
-    
+    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0002f, fowardSpeedMult = 0.0003f;
+
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private bool isGrounded = true;
     private Animator m_Animator;
@@ -27,12 +27,14 @@ public class PlayerMovement : MonoBehaviour
     private float bottomCoordStart;
     private float currentTimeSpeed;
     private Directions currentDirection;
+    private Vector2 defaultXZposition;
 
     bool alive, startState;
 
     private void Start()
     {
         startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false;
+        defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
         box = GetComponent<CapsuleCollider>();
@@ -53,33 +55,39 @@ public class PlayerMovement : MonoBehaviour
             case Directions.FOWARD:
                 Vector3 forwardMove = speed * Time.fixedDeltaTime * transform.forward;
                 targetPosition += forwardMove;
-                targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
                 break;
             case Directions.BACK:
                 Vector3 backMove = -1 * speed * Time.fixedDeltaTime * transform.forward;
                 targetPosition += backMove;
-                targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
                 break;
             case Directions.RIGHT:
                 Vector3 rightMove = speed * Time.fixedDeltaTime * transform.right;
                 targetPosition += rightMove;
-                targetPosition.z = Mathf.Lerp(rb.position.z, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
                 break;
             case Directions.LEFT:
                 Vector3 leftMove = -1 * speed * Time.fixedDeltaTime * transform.right;
                 targetPosition += leftMove;
-                targetPosition.z = Mathf.Lerp(rb.position.z, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
                 break;
             default:
                 Vector3 defaultMove = speed * Time.fixedDeltaTime * transform.forward;
                 targetPosition += defaultMove;
-                targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
                 break;
         }
         rb.MovePosition(targetPosition);
+        Debug.Log(targetPosition);
 
-        Time.timeScale = currentTimeSpeed;
-        currentTimeSpeed += timeSpeedMult;
+        if (Time.timeScale < 3)
+        {
+            Time.timeScale = currentTimeSpeed;
+            currentTimeSpeed += timeSpeedMult;
+        }
+
+        speed += fowardSpeedMult;
     }
 
     void Update()
@@ -151,6 +159,12 @@ public class PlayerMovement : MonoBehaviour
         m_Animator.SetTrigger("startRuning");
     }
 
+    public void setMiddlePosition(Vector3 middlePos)
+    {
+        defaultXZposition.x = middlePos.x; // set default x
+        defaultXZposition.y = middlePos.z; // set default y
+    }
+
     public void turnPlayer(int direction)
     {
         switch (direction)
@@ -159,13 +173,15 @@ public class PlayerMovement : MonoBehaviour
                 currentDirection = Directions.FOWARD;
                 break;
             case 1:
-                currentDirection = Directions.RIGHT;
+                currentDirection = Directions.BACK;
                 break;
             case 2:
+                currentDirection = Directions.RIGHT;
+                break;
+            case 3:
                 currentDirection = Directions.LEFT;
                 break;
             default:
-                currentDirection = Directions.FOWARD;
                 break;
         }
     }
