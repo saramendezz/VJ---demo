@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private bool isGrounded = true;
+    private bool isDucking = false; //ajupir-se
     private Animator m_Animator;
     private float offsetJumpAnimation;
     private bool isJumping, isJumpAnim, isGoingDown;
@@ -125,6 +126,22 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = false;
             }
         }
+        //Codi d'ajupir-se
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
+        {
+            isDucking = true;
+            m_Animator.SetTrigger("startDucking");
+            box.height = 1; // Suponiendo que la altura normal es 2
+            box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow) && isDucking)
+        {
+            isDucking = false;
+            m_Animator.SetTrigger("stopDucking");
+            box.height = 2; // Restaura la altura normal del collider
+            box.center = new Vector3(box.center.x, 1, box.center.z); // Restaura el centro del collider
+        }
+
         if (transform.position.y < -5)
         {
             Die();
