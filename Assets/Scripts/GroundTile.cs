@@ -41,12 +41,16 @@ public class GroundTile : MonoBehaviour
     void SpawnCoins()
     {
         int coinsToSpawn = 10;
+        float spacing = 1.0f;
+
         for (int i = 0; i < coinsToSpawn; i++)
         {
             int coinSpawnIndex = Random.Range(1, 4);
             Transform spawnPoint = transform.GetChild(coinSpawnIndex);
 
             Vector3 coinPosition = spawnPoint.position;
+            coinPosition.z += i * spacing;
+
             if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x + 1;
             else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x - 1;
             Instantiate(coinPrefab, coinPosition, Quaternion.identity, transform);
