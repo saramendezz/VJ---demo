@@ -73,8 +73,8 @@ public class GroundSpawner : MonoBehaviour
         GameObject tmp;
         tmp = Instantiate(groundTileStart001, nextSpawnPoint, currentRotation);
         nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
-        tmp = Instantiate(groundTileStart002, nextSpawnPoint, currentRotation);
-        nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
+        //tmp = Instantiate(groundTileStart002, nextSpawnPoint, currentRotation);
+        //nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
         nextDoblePoint = Vector3.zero;
 
         for (int i = 0; i < 8; i++)
@@ -121,11 +121,34 @@ public class GroundSpawner : MonoBehaviour
         isDoubleDirection = false;
         if (directionRemoved == 0)
         {
-            for (int i = 0; i < turnGroundTilesRight.Count; i++) turnGroundTilesRight.RemoveAt(i);
+            /*
+            for (int i = 0; i < turnGroundTilesRight.Count; i++)
+            {
+                GroundTile ground = turnGroundTilesRight[i];
+                ground.dieGround();
+                turnGroundTilesRight.RemoveAt(i);
+            }
+             */
+
+            foreach (GameObject gameObject in turnGroundTilesLeft)
+            {
+                Destroy(gameObject);
+            }
+
+            // Clear the list after destroying all GameObjects
+            turnGroundTilesLeft.Clear();
         }
         else
         {
-            for (int i = 0; i < turnGroundTilesLeft.Count; i++) turnGroundTilesLeft.RemoveAt(i);
+            // for (int i = 0; i < turnGroundTilesLeft.Count; i++) turnGroundTilesLeft.RemoveAt(i);
+            foreach (GameObject gameObject in turnGroundTilesRight)
+            {
+                Destroy(gameObject);
+            }
+
+            // Clear the list after destroying all GameObjects
+            turnGroundTilesRight.Clear();
+
             currentRotation = currentDobleRotation;
             nextSpawnPoint = nextDoblePoint;
         }

@@ -18,6 +18,11 @@ public class GroundTile : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
+    public void dieGround()
+    {
+        Destroy(gameObject, 2);
+    }
+
     // Update is called once per frame
     void Update()
     {

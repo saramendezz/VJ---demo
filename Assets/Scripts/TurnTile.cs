@@ -6,6 +6,7 @@ public class TurnTile : MonoBehaviour
 {
     GroundSpawner groundSpawner;
     PlayerMovement playerMovement;
+    CameraFollow cameraFollow;
     private bool isInside;
     private Directions currentDirection;
 
@@ -14,8 +15,25 @@ public class TurnTile : MonoBehaviour
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
         playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
+        cameraFollow = GameObject.FindObjectOfType<CameraFollow>();
         groundSpawner.changeDirection(0);
-        currentDirection = Directions.FOWARD;
+        switch (playerMovement.getCurrentDirection())
+        {
+            case 0:
+                currentDirection = Directions.FOWARD;
+                break;
+            case 1:
+                currentDirection = Directions.BACK;
+                break;
+            case 2:
+                currentDirection = Directions.RIGHT;
+                break;
+            case 3:
+                currentDirection = Directions.LEFT;
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,18 +61,23 @@ public class TurnTile : MonoBehaviour
                 groundSpawner.endDoubleDirection(0);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
                 playerMovement.rotatePlayer(90f);
+                cameraFollow.turnCamera(true, transform.GetChild(0).transform.position);
                 switch (currentDirection)
                 {
                     case Directions.FOWARD:
+                        currentDirection = Directions.RIGHT;
                         playerMovement.turnPlayer(2);
                         break;
                     case Directions.BACK:
+                        currentDirection = Directions.LEFT;
                         playerMovement.turnPlayer(3);
                         break;
                     case Directions.RIGHT:
+                        currentDirection = Directions.BACK;
                         playerMovement.turnPlayer(1);
                         break;
                     case Directions.LEFT:
+                        currentDirection = Directions.FOWARD;
                         playerMovement.turnPlayer(0);
                         break;
                     default:
@@ -66,18 +89,23 @@ public class TurnTile : MonoBehaviour
                 groundSpawner.endDoubleDirection(1);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
                 playerMovement.rotatePlayer(-90f);
+                cameraFollow.turnCamera(false, transform.GetChild(0).transform.position);
                 switch (currentDirection)
                 {
                     case Directions.FOWARD:
+                        currentDirection = Directions.LEFT;
                         playerMovement.turnPlayer(3);
                         break;
                     case Directions.BACK:
+                        currentDirection = Directions.RIGHT;
                         playerMovement.turnPlayer(2);
                         break;
                     case Directions.RIGHT:
+                        currentDirection = Directions.FOWARD;
                         playerMovement.turnPlayer(0);
                         break;
                     case Directions.LEFT:
+                        currentDirection = Directions.BACK;
                         playerMovement.turnPlayer(1);
                         break;
                     default:
