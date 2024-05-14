@@ -46,9 +46,12 @@ public class TurnTile : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        isInside = false;
-        groundSpawner.SpawnTile();
-        Destroy(gameObject, 2);
+        if (other.gameObject.name == "Player")
+        {
+            isInside = false;
+            groundSpawner.SpawnTile();
+            Destroy(gameObject, 2);
+        }
     }
 
     // Update is called once per frame

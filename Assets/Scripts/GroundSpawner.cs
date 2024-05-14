@@ -67,7 +67,7 @@ public class GroundSpawner : MonoBehaviour
     }
     void Start()
     {
-        currentId = 1; countId = 0;
+        currentId = 1; countId = 2;
         currentRotation = Quaternion.identity;
         isDoubleDirection = false;
         GameObject tmp;

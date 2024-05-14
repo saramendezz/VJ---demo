@@ -16,7 +16,8 @@ public class SpawnTile : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Destroy(gameObject, 2);
+        if (other.gameObject.name == "Player")
+            Destroy(gameObject, 2);
     }
 
     // Update is called once per frame
