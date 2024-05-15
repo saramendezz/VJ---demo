@@ -4,6 +4,7 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform player;
     public Camera cam02;
+    public AnimationCurve curve;
     Vector3 offset;
     bool isRuning;
     bool isXdirection;
@@ -13,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     // TEST SMOOTH ROTATION
     private bool isRotatingL;
     private bool isRotatingR;
-    private float rotationSpeed = 4.0f;
+    private float rotationSpeed = 70f;
     private Quaternion targetRotation;
 
     // Start is called before the first frame update
@@ -108,30 +109,15 @@ public class CameraFollow : MonoBehaviour
         }
         float rotation = rotationRight ? 90f : -90f;
         targetRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
-        // targetRotation = transform.rotation * Quaternion.Euler(0, rotationRight ? 90f : -90f, 0);
-        
-        /*
-        float rotation = rotationRight ? 90f : -90f;
-        Quaternion newRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
-
-        // Apply the new rotation to the main camera
-        Camera.main.transform.rotation = newRotation;
-         */
-
-
-        //transform.rotation.SetEulerRotation(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + rotation, transform.rotation.eulerAngles.z));
     }
 
     private void RotateCameraSmoothly()
     {
-        // Calculate the rotation step based on the rotation speed and time
         float step = rotationSpeed * Time.deltaTime;
 
-        // Rotate the camera towards the target rotation
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, step);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, step);
-
-        // Check if the rotation is close enough to the target rotation to stop
+        // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, step);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, curve.Evaluate(step));
+        
         if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
         {
             // Reset rotation flag
