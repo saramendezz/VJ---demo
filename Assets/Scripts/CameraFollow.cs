@@ -14,7 +14,9 @@ public class CameraFollow : MonoBehaviour
     // TEST SMOOTH ROTATION
     private bool isRotatingL;
     private bool isRotatingR;
-    private float rotationSpeed = 70f;
+
+    private float rotationPtr;
+    private float rotationSpeed;
     private Quaternion targetRotation;
 
     // Start is called before the first frame update
@@ -30,6 +32,8 @@ public class CameraFollow : MonoBehaviour
 
         isRotatingL = false;
         isRotatingR = false;
+        rotationPtr = 0f;
+        rotationSpeed = 0.01f;
     }
 
     // Update is called once per frame
@@ -113,16 +117,18 @@ public class CameraFollow : MonoBehaviour
 
     private void RotateCameraSmoothly()
     {
-        float step = rotationSpeed * Time.deltaTime;
+        // float step = rotationSpeed * Time.deltaTime;
+        rotationPtr += rotationSpeed;
 
         // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, step);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, curve.Evaluate(step));
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, curve.Evaluate(rotationPtr));
         
         if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
         {
             // Reset rotation flag
             isRotatingL = false;
             isRotatingR = false;
+            rotationPtr = 0f;
         }
     }
 }

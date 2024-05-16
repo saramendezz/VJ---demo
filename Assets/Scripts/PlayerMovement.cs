@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -16,25 +17,30 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
     public PlayableDirector timeline;
     public CapsuleCollider box;
+    public AnimationCurve curve;
 
-    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0002f, fowardSpeedMult = 0.0003f;
+    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0001f, fowardSpeedMult = 0.0003f;
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private bool isGrounded = true;
     private bool isDucking = false; //ajupir-se
     private Animator m_Animator;
     private float offsetJumpAnimation;
-    private bool isJumping, isJumpAnim, isGoingDown;
+    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit;
     private float bottomCoordStart;
-    private float currentTimeSpeed;
+    private float currentTimeSpeed, subsSpeed;
     private Directions currentDirection;
     private Vector2 defaultXZposition;
+
+    //test smooth rotation
+    private Quaternion desiredRotation;
+    private float curvePtr, curveSpeed;
 
     bool alive, startState;
 
     private void Start()
     {
-        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false;
+        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false;
         defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
@@ -44,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = timeStartSpeed;
         currentTimeSpeed = timeStartSpeed;
         currentDirection = Directions.FOWARD;
+        curvePtr = 0f; curveSpeed = 0.01f;
+        desiredRotation = Quaternion.identity;
+        subsSpeed = speed;
     }
 
     void FixedUpdate()
@@ -60,19 +69,19 @@ public class PlayerMovement : MonoBehaviour
         switch (currentDirection)
         {
             case Directions.FOWARD:
-                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
                 break;
             case Directions.BACK:
-                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x - GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x - GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
                 break;
             case Directions.RIGHT:
-                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y - GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y - GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
                 break;
             case Directions.LEFT:
-                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
                 break;
             default:
-                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
                 break;
         }
         rb.MovePosition(targetPosition);
@@ -84,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         speed += fowardSpeedMult;
+        subsSpeed += fowardSpeedMult;
     }
 
     void Update()
@@ -98,10 +108,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //Mathf.Clamp(value, min, max)
+            if (desiredLane == 2) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2); // Prevents exceeding lane bounds
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            if (desiredLane == 0) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
         }
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -144,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
             box.height = 2; // Restaura la altura normal del collider
             box.center = new Vector3(box.center.x, 1, box.center.z); // Restaura el centro del collider
         }
+
+        if (isRotating) RotateSmoothly();
+        if (isHit) ReturnSpeedSmoothly();
 
         if (transform.position.y < -5)
         {
@@ -207,7 +222,47 @@ public class PlayerMovement : MonoBehaviour
 
     public void rotatePlayer(float rotation)
     {
-        rb.MoveRotation(rb.rotation * Quaternion.Euler(0, rotation, 0));
+        if (rotation == 90) desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2);
+        else desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2);
+
+        // rb.MoveRotation(rb.rotation * Quaternion.Euler(0, rotation, 0));
+        desiredRotation = rb.rotation * Quaternion.Euler(0, rotation, 0);
+        isRotating = true;
+    }
+
+    private void RotateSmoothly()
+    {
+        curvePtr += curveSpeed;
+
+        rb.MoveRotation(Quaternion.Lerp(transform.rotation, desiredRotation, curve.Evaluate(curvePtr)));
+
+        if (Quaternion.Angle(transform.rotation, desiredRotation) < 0.1f)
+        {
+            isRotating = false;
+            curvePtr = 0f;
+        }
+    }
+
+    private void setIsHit()
+    {
+        if (isHit) Die();
+        else
+        {
+            isHit = true;
+            subsSpeed = speed;
+            speed -= 3;
+        }
+    }
+
+    private void ReturnSpeedSmoothly()
+    {
+        speed = Mathf.Lerp(speed, subsSpeed, curve.Evaluate(Time.fixedDeltaTime * 2));
+
+        if (subsSpeed - speed < 0.1f) 
+        {
+            isHit = false;
+            speed = subsSpeed;
+        }
     }
 
     void Restart()
