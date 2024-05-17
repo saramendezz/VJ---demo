@@ -142,13 +142,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //Codi d'ajupir-se
-        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan"))
         {
             isDucking = true;
             m_Animator.SetTrigger("startDucking");
             box.height = 1; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
         }
+        if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan") && isDucking)
+        {
+            isDucking = false;
+            m_Animator.SetTrigger("startRuning");
+        }
+        /*
         if (Input.GetKeyUp(KeyCode.DownArrow) && isDucking)
         {
             isDucking = false;
@@ -156,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
             box.height = 2; // Restaura la altura normal del collider
             box.center = new Vector3(box.center.x, 1, box.center.z); // Restaura el centro del collider
         }
+         */
 
         if (isRotating) RotateSmoothly();
         if (isHit) ReturnSpeedSmoothly();

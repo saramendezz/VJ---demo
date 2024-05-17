@@ -32,7 +32,11 @@ public class GroundTile : MonoBehaviour
 
     }
 
-    public GameObject obstaclePrefab;
+    public GameObject obstaclePrefab01;
+    public GameObject obstaclePrefab02;
+    public GameObject obstaclePrefab03;
+    public GameObject obstaclePrefab04;
+    public GameObject obstaclePrefab05;
 
     void SpawnObstacle()
     {
@@ -40,8 +44,41 @@ public class GroundTile : MonoBehaviour
         int obstacleSpawnIndex = Random.Range(1, 4);
         Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
 
-        //Spawn the obstacle at the position
-        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
+        int numObs = Random.Range(1, 4);
+        int countArrowPrefab = 0;
+        for (int i = 0; i < numObs; i++)
+        {
+            int randomObs = Random.Range(1, 6);
+            if (countArrowPrefab == 2 && (randomObs == 3 || randomObs == 4)) randomObs = 5;
+            //Spawn the obstacle at the position
+            switch (randomObs)
+            {   
+                case 1:
+                    Instantiate(obstaclePrefab01, spawnPoint.position, Quaternion.identity, transform);
+                    break;
+                case 2:
+                    Instantiate(obstaclePrefab02, spawnPoint.position, Quaternion.identity, transform);
+                    break;
+                case 3:
+                    Instantiate(obstaclePrefab03, spawnPoint.position, Quaternion.identity, transform);
+                    ++countArrowPrefab;
+                    break;
+                case 4:
+                    Instantiate(obstaclePrefab04, spawnPoint.position, Quaternion.identity, transform);
+                    ++countArrowPrefab;
+                    break;
+                case 5:
+                    Instantiate(obstaclePrefab05, spawnPoint.position, Quaternion.identity, transform);
+                    break;
+                default:
+                    Instantiate(obstaclePrefab01, spawnPoint.position, Quaternion.identity, transform);
+                    break;
+            }
+            ++obstacleSpawnIndex;
+            if (obstacleSpawnIndex == 4) obstacleSpawnIndex = 1;
+            spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+        }
+        //Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 
     public GameObject coinPrefab;

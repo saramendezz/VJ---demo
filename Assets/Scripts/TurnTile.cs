@@ -86,6 +86,7 @@ public class TurnTile : MonoBehaviour
                     default:
                         break;
                 }
+                isInside = false;
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
@@ -114,6 +115,7 @@ public class TurnTile : MonoBehaviour
                     default:
                         break;
                 }
+                isInside = false;
             }
         }
     }
