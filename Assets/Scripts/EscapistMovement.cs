@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
 
 public class EscapistMovement : MonoBehaviour
 {
@@ -45,6 +42,47 @@ public class EscapistMovement : MonoBehaviour
     public void startRun()
     {
         startState = false;
-        m_Animator.SetTrigger("startRuning");
+        m_Animator.SetTrigger("startRunning");
+    }
+
+    void MoveLane(bool goingRight)
+    {
+        // Move left
+        if (!goingRight)
+        {
+            desiredLane--;
+            if (desiredLane < 0)
+                desiredLane = 0;
+        }
+        // Move right
+        else
+        {
+            desiredLane++;
+            if (desiredLane > 2)
+                desiredLane = 2;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            // Detect obstacle and change lane if possible
+            if (desiredLane == 0)
+            {
+                // Move to the middle lane if in the left lane
+                desiredLane = 1;
+            }
+            else if (desiredLane == 2)
+            {
+                // Move to the middle lane if in the right lane
+                desiredLane = 1;
+            }
+            else
+            {
+                // Move to the left lane if in the middle lane
+                desiredLane = 0;
+            }
+        }
     }
 }
