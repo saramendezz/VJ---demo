@@ -44,7 +44,7 @@ public class GroundTile : MonoBehaviour
         int obstacleSpawnIndex = Random.Range(1, 4);
         Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
 
-        int numObs = Random.Range(1, 4);
+        int numObs = Random.Range(1, 3);
         int countArrowPrefab = 0;
         for (int i = 0; i < numObs; i++)
         {
@@ -96,8 +96,8 @@ public class GroundTile : MonoBehaviour
             Vector3 coinPosition = spawnPoint.position;
             coinPosition.z += i * spacing;
 
-            if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x + 1;
-            else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x - 1;
+            if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x;
+            else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x;
             Instantiate(coinPrefab, coinPosition, transform.rotation, transform);
         }
     }
