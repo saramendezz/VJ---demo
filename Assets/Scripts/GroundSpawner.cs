@@ -31,9 +31,11 @@ public class GroundSpawner : MonoBehaviour
             {
                 case 1:
                     tmp = Instantiate(groundTile001, nextSpawnPoint, currentRotation);
+                    // spawnObstacle(tmp);
                     break;
                 case 2:
                     tmp = Instantiate(groundTile002, nextSpawnPoint, currentRotation);
+                    //spawnObstacle(tmp);
                     break;
                 default:
                     return;
@@ -45,9 +47,11 @@ public class GroundSpawner : MonoBehaviour
                 {
                     case 1:
                         tmp2 = Instantiate(groundTile001, nextDoblePoint, currentDobleRotation);
+                        //spawnObstacle(tmp2);
                         break;
                     case 2:
                         tmp2 = Instantiate(groundTile002, nextDoblePoint, currentDobleRotation);
+                        //spawnObstacle(tmp2);
                         break;
                     default:
                         return;
@@ -73,8 +77,7 @@ public class GroundSpawner : MonoBehaviour
         GameObject tmp;
         tmp = Instantiate(groundTileStart001, nextSpawnPoint, currentRotation);
         nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
-        //tmp = Instantiate(groundTileStart002, nextSpawnPoint, currentRotation);
-        //nextSpawnPoint = tmp.transform.GetChild(0).transform.position;
+
         nextDoblePoint = Vector3.zero;
 
         for (int i = 0; i < 8; i++)
@@ -121,15 +124,6 @@ public class GroundSpawner : MonoBehaviour
         isDoubleDirection = false;
         if (directionRemoved == 0)
         {
-            /*
-            for (int i = 0; i < turnGroundTilesRight.Count; i++)
-            {
-                GroundTile ground = turnGroundTilesRight[i];
-                ground.dieGround();
-                turnGroundTilesRight.RemoveAt(i);
-            }
-             */
-
             foreach (GameObject gameObject in turnGroundTilesLeft)
             {
                 Destroy(gameObject);

@@ -23,10 +23,9 @@ public class PlayerMovement : MonoBehaviour
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private bool isGrounded = true;
-    private bool isDucking = false; //ajupir-se
     private Animator m_Animator;
     private float offsetJumpAnimation;
-    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit, isTurnin;
+    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit;
     private float bottomCoordStart;
     private float currentTimeSpeed, subsSpeed;
     private Directions currentDirection;
@@ -40,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; isTurnin = false;
+        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; 
         defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
@@ -104,28 +103,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (startState) return;
-        if (isTurnin)
-        {
-            isTurnin = false;
-            m_Animator.SetTrigger("startRuning");
-        }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //Mathf.Clamp(value, min, max)
-            m_Animator.SetTrigger("turnR");
             if (desiredLane == 2) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2); // Prevents exceeding lane bounds
-            isTurnin = true;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            m_Animator.SetTrigger("turnL");
             if (desiredLane == 0) setIsHit();
-            isTurnin = true;
             desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
         }
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             m_Animator.SetTrigger("startJumping");
@@ -162,7 +152,6 @@ public class PlayerMovement : MonoBehaviour
          */
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
         {
-            isDucking = true;
             m_Animator.SetTrigger("startDucking");
             box.height = 1; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider

@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class GroundTile : MonoBehaviour
 {
+    public GameObject obstaclePrefab01;
+    public GameObject obstaclePrefab02;
+    public GameObject obstaclePrefab03;
+    public GameObject obstaclePrefab04;
+    public GameObject obstaclePrefab05;
+
     GroundSpawner groundSpawner;
     // Start is called before the first frame update
     void Start()
@@ -32,12 +38,6 @@ public class GroundTile : MonoBehaviour
 
     }
 
-    public GameObject obstaclePrefab01;
-    public GameObject obstaclePrefab02;
-    public GameObject obstaclePrefab03;
-    public GameObject obstaclePrefab04;
-    public GameObject obstaclePrefab05;
-
     void SpawnObstacle()
     {
         //Choose random point to spawn the obstacle
@@ -54,24 +54,24 @@ public class GroundTile : MonoBehaviour
             switch (randomObs)
             {   
                 case 1:
-                    Instantiate(obstaclePrefab01, spawnPoint.position, Quaternion.identity, transform);
+                    Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
                     break;
                 case 2:
-                    Instantiate(obstaclePrefab02, spawnPoint.position, Quaternion.identity, transform);
+                    Instantiate(obstaclePrefab02, spawnPoint.position, transform.rotation, transform);
                     break;
                 case 3:
-                    Instantiate(obstaclePrefab03, spawnPoint.position, Quaternion.identity, transform);
-                    ++countArrowPrefab;
+                    Instantiate(obstaclePrefab03, spawnPoint.position, transform.rotation, transform);
+                    ++countArrowPrefab; 
                     break;
                 case 4:
-                    Instantiate(obstaclePrefab04, spawnPoint.position, Quaternion.identity, transform);
+                    Instantiate(obstaclePrefab04, spawnPoint.position, transform.rotation, transform);
                     ++countArrowPrefab;
                     break;
                 case 5:
-                    Instantiate(obstaclePrefab05, spawnPoint.position, Quaternion.identity, transform);
+                    Instantiate(obstaclePrefab05, spawnPoint.position, transform.rotation, transform);
                     break;
                 default:
-                    Instantiate(obstaclePrefab01, spawnPoint.position, Quaternion.identity, transform);
+                    Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
                     break;
             }
             ++obstacleSpawnIndex;
@@ -98,7 +98,7 @@ public class GroundTile : MonoBehaviour
 
             if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x + 1;
             else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x - 1;
-            Instantiate(coinPrefab, coinPosition, Quaternion.identity, transform);
+            Instantiate(coinPrefab, coinPosition, transform.rotation, transform);
         }
     }
 }

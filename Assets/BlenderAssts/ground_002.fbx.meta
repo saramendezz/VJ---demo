@@ -10,7 +10,7 @@ ModelImporter:
       name: UV_tunnel_Mat
     second: {fileID: 2100000, guid: a20f5da78801f024daed5329c92b087d, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1

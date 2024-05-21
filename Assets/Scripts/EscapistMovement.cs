@@ -42,7 +42,7 @@ public class EscapistMovement : MonoBehaviour
     public void startRun()
     {
         startState = false;
-        m_Animator.SetTrigger("startRunning");
+        m_Animator.SetTrigger("startRuning");
     }
 
     void MoveLane(bool goingRight)
