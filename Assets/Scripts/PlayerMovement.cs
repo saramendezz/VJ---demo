@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isDucking = true;
             m_Animator.SetTrigger("startDucking");
-            box.height = 1; // Suponiendo que la altura normal es 2
+            box.height = 0.5f; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
         }
          */
