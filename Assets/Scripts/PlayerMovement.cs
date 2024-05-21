@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDucking = false; //ajupir-se
     private Animator m_Animator;
     private float offsetJumpAnimation;
-    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit;
+    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit, isTurnin;
     private float bottomCoordStart;
     private float currentTimeSpeed, subsSpeed;
     private Directions currentDirection;
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false;
+        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; isTurnin = false;
         defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
@@ -104,16 +104,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (startState) return;
+        if (isTurnin)
+        {
+            isTurnin = false;
+            m_Animator.SetTrigger("startRuning");
+        }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //Mathf.Clamp(value, min, max)
+            m_Animator.SetTrigger("turnR");
             if (desiredLane == 2) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2); // Prevents exceeding lane bounds
+            isTurnin = true;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            m_Animator.SetTrigger("turnL");
             if (desiredLane == 0) setIsHit();
+            isTurnin = true;
             desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
         }
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -142,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //Codi d'ajupir-se
+        /*
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan"))
         {
             isDucking = true;
@@ -149,12 +159,20 @@ public class PlayerMovement : MonoBehaviour
             box.height = 1; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
         }
+         */
+        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
+        {
+            isDucking = true;
+            m_Animator.SetTrigger("startDucking");
+            box.height = 1; // Suponiendo que la altura normal es 2
+            box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
+        }
+        /*
         if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan") && isDucking)
         {
             isDucking = false;
             m_Animator.SetTrigger("startRuning");
         }
-        /*
         if (Input.GetKeyUp(KeyCode.DownArrow) && isDucking)
         {
             isDucking = false;
