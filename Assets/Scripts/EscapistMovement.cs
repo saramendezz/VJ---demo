@@ -10,6 +10,7 @@ public class EscapistMovement : MonoBehaviour
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private Animator m_Animator;
+    private readonly float fowardSpeedMult = 0.0003f;
 
     bool alive, startState;
     private bool isDucking = false;
@@ -31,6 +32,8 @@ public class EscapistMovement : MonoBehaviour
         Vector3 targetPosition = rb.position + forwardMove;
         targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
         rb.MovePosition(targetPosition);
+
+        speed += fowardSpeedMult;
     }
 
     void Update()
@@ -60,7 +63,7 @@ public class EscapistMovement : MonoBehaviour
     public void startRun()
     {
         startState = false;
-        m_Animator.SetTrigger("startRunning");
+        m_Animator.SetTrigger("startRuning");
     }
 
     void MoveLane(bool goingRight)

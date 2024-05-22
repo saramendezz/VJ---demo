@@ -8,6 +8,8 @@ public class GroundSpawner : MonoBehaviour
     public GameObject groundTileStart001;
     public GameObject groundTileStart002;
     public GameObject groundTurn;
+    public GameObject groundTurnL;
+    public GameObject groundTurnR;
     private int currentId, countId;
     private const int MAX_NUM_GROUND = 3, MAX_NUM_ITER = 10; 
     Vector3 nextSpawnPoint, nextDoblePoint;
@@ -22,7 +24,22 @@ public class GroundSpawner : MonoBehaviour
         GameObject tmp, tmp2;
         if (countId == MAX_NUM_ITER)
         {
-            tmp = Instantiate(groundTurn, nextSpawnPoint, currentRotation);
+            int turnType = Random.Range(1, 4);
+            switch (turnType)
+            {
+                case 1:
+                    tmp = Instantiate(groundTurn, nextSpawnPoint, currentRotation);
+                    break;
+                case 2:
+                    tmp = Instantiate(groundTurnL, nextSpawnPoint, currentRotation);
+                    break;
+                case 3:
+                    tmp = Instantiate(groundTurnR, nextSpawnPoint, currentRotation);
+                    break;
+                default:
+                    return;
+            }
+            // tmp = Instantiate(groundTurn, nextSpawnPoint, currentRotation);
             nextDoblePoint = tmp.transform.GetChild(1).transform.position;
         }
         else

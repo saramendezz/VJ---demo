@@ -14905,6 +14905,7 @@ MonoBehaviour:
   jumpForce: 7
   speed: 10
   rb: {fileID: 549234922}
+  box: {fileID: 0}
 --- !u!54 &549234922
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17716,6 +17717,8 @@ MonoBehaviour:
   groundTileStart001: {fileID: 8796865450041279733, guid: 9fb321db8a662f84ca25a7b422b09633, type: 3}
   groundTileStart002: {fileID: 8796865450041279733, guid: 5f403b03d2ae16d43b4091dd3d3cb9e0, type: 3}
   groundTurn: {fileID: 8796865450041279733, guid: a1182481444cfdf42bbda532a3d39712, type: 3}
+  groundTurnL: {fileID: 8796865450041279733, guid: 7043e0c5c4bb19248b036ffe93ad0001, type: 3}
+  groundTurnR: {fileID: 8796865450041279733, guid: 1e94f90aec3e8e44a865963c520b0c6e, type: 3}
 --- !u!4 &789091816
 Transform:
   m_ObjectHideFlags: 0
@@ -17898,14 +17901,14 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.27083334
     - serializedVersion: 3
-      time: 0.61640203
-      value: 0.43074927
+      time: 0.35807073
+      value: 0.40480933
       inSlope: 1.7319345
-      outSlope: 4.1766434
+      outSlope: 2.4952652
       tangentMode: 1
       weightedMode: 0
       inWeight: 0.06514317
-      outWeight: 0.055000182
+      outWeight: 0.06531759
     - serializedVersion: 3
       time: 1
       value: 1
