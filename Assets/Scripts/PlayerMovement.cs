@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0001f, fowardSpeedMult = 0.0003f;
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
-    private bool isGrounded = true;
+    private bool isGrounded = true, isGodMode;
     private Animator m_Animator;
     private float offsetJumpAnimation;
     private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit;
@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentTimeSpeed, subsSpeed;
     private Directions currentDirection;
     private Vector2 defaultXZposition;
+    MainMenu mainMenu;
 
     //test smooth rotation
     private Quaternion desiredRotation;
@@ -39,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; 
+        startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; isGodMode = false;
         defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         curvePtr = 0f; curveSpeed = 0.01f;
         desiredRotation = Quaternion.identity;
         subsSpeed = speed;
+        mainMenu = GameObject.FindObjectOfType<MainMenu >();
     }
 
     void FixedUpdate()
@@ -99,10 +101,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if (startState && Input.GetKeyDown(KeyCode.P))
         {
+            mainMenu.startGameFromPlayer();
             timeline.Play();
         }
+        bool pActive = false;
+        if (isGodMode && Input.GetKeyDown(KeyCode.G))
+        {
+            mainMenu.exitGodMode();
+            isGodMode = false;
+            pActive = true;
+        }
 
-        if (startState) return;
+        if (startState || isGodMode) return;
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -140,39 +150,22 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = false;
             }
         }
-        //Codi d'ajupir-se
-        /*
-        if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded && !m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan"))
-        {
-            isDucking = true;
-            m_Animator.SetTrigger("startDucking");
-            box.height = 0.5f; // Suponiendo que la altura normal es 2
-            box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
-        }
-         */
+
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
         {
             m_Animator.SetTrigger("startDucking");
             box.height = 1; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
         }
-        /*
-        if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("slide_PoliceMan") && isDucking)
-        {
-            isDucking = false;
-            m_Animator.SetTrigger("startRuning");
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow) && isDucking)
-        {
-            isDucking = false;
-            m_Animator.SetTrigger("stopDucking");
-            box.height = 2; // Restaura la altura normal del collider
-            box.center = new Vector3(box.center.x, 1, box.center.z); // Restaura el centro del collider
-        }
-         */
 
         if (isRotating) RotateSmoothly();
         if (isHit) ReturnSpeedSmoothly();
+
+        if (!pActive && !isGodMode && Input.GetKeyDown(KeyCode.G))
+        {
+            mainMenu.setGodMode();
+            isGodMode = true;
+        }
 
         if (transform.position.y < -5)
         {
@@ -195,8 +188,13 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Animator.SetTrigger("setDie");
         alive = false;
-        Invoke("Restart", 2); // Delay before restarting
+        Invoke("Restart", 1); // Delay before restarting
         Time.timeScale = 1;
+    }
+
+    public void startGame()
+    {
+        timeline.Play();
     }
 
     public void startRun()
@@ -259,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void setIsHit()
     {
+        mainMenu.setSlowed();
         if (isHit) Die();
         else
         {
@@ -274,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (subsSpeed - speed < 0.1f) 
         {
+            mainMenu.exitSlowed();
             isHit = false;
             speed = subsSpeed;
         }

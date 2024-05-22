@@ -7,6 +7,7 @@ ScriptsOnlyBuild:
     - GameManager
     - GroundSpawner
     - GroundTile
+    - MainMenu
     - Obstacle
     - PlayerMovement
     - SpawnTile
@@ -18,6 +19,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshProUGUI
     Unity.Timeline.dll:
     - UnityEngine.Timeline.AnimationPlayableAsset
     - UnityEngine.Timeline.AnimationTrack
@@ -29,8 +36,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -39,9 +48,12 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
     - UnityEngine.UI.Text
+    - UnityEngine.UI.VerticalLayoutGroup
   serializedClasses:
     Unity.TextMeshPro:
     - TMPro.FaceInfo_Legacy
@@ -57,6 +69,7 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteCharacter
     - TMPro.TMP_SpriteGlyph
     - TMPro.TMP_Style
+    - TMPro.VertexGradient
     Unity.Timeline:
     - UnityEngine.Timeline.MarkerList
     - UnityEngine.Timeline.SignalReceiver/EventKeyValue
@@ -67,15 +80,24 @@ ScriptsOnlyBuild:
     - UnityEngine.Events.PersistentCallGroup
     - UnityEngine.Events.PersistentListenerMode
     - UnityEngine.Events.UnityEvent
+    - UnityEngine.RectOffset
     UnityEngine.TextCoreFontEngineModule:
     - UnityEngine.TextCore.FaceInfo
     - UnityEngine.TextCore.Glyph
     - UnityEngine.TextCore.GlyphMetrics
     - UnityEngine.TextCore.GlyphRect
     UnityEngine.UI:
+    - UnityEngine.UI.AnimationTriggers
+    - UnityEngine.UI.Button/ButtonClickedEvent
+    - UnityEngine.UI.ColorBlock
     - UnityEngine.UI.FontData
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+    - UnityEngine.UI.Navigation
+    - UnityEngine.UI.SpriteState
   methodsToPreserve:
+  - assembly: Assembly-CSharp
+    fullTypeName: MainMenu
+    methodName: startGame
   - assembly: Assembly-CSharp
     fullTypeName: EscapistMovement
     methodName: startRun
@@ -85,6 +107,9 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: CameraFollow
     methodName: setRuning
+  - assembly: Assembly-CSharp
+    fullTypeName: MainMenu
+    methodName: exitGame
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -130,6 +155,8 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 1648}
+    - Class: 114
       Script: {instanceID: 1732}
     - Class: 114
       Script: {instanceID: 1750}
@@ -143,6 +170,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2698}
     - Class: 114
       Script: {instanceID: 2882}
+    - Class: 114
+      Script: {instanceID: 3176}
     - Class: 114
       Script: {instanceID: 3628}
     - Class: 114
@@ -166,6 +195,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5706}
     - Class: 114
+      Script: {instanceID: 5854}
+    - Class: 114
       Script: {instanceID: 5868}
     - Class: 114
       Script: {instanceID: 6168}
@@ -174,6 +205,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6298}
     - Class: 114
+      Script: {instanceID: 6576}
+    - Class: 114
       Script: {instanceID: 6676}
     - Class: 114
       Script: {instanceID: 6838}
@@ -181,6 +214,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 7542}
     - Class: 114
       Script: {instanceID: 7810}
+    - Class: 114
+      Script: {instanceID: 33476}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -196,6 +231,8 @@ ScriptsOnlyBuild:
     - Class: 198
       Script: {instanceID: 0}
     - Class: 199
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -1030,7 +1067,7 @@ ScriptsOnlyBuild:
     className: UnityOnPointerDownMessageListener
   - hash:
       serializedVersion: 2
-      Hash: 2edfaa452793295e5bae3cc98161fdea
+      Hash: e16f8a4669eb24fbfb9ac8cb4e2005d8
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: GroundSpawner
@@ -1138,7 +1175,7 @@ ScriptsOnlyBuild:
     className: LensDistortion
   - hash:
       serializedVersion: 2
-      Hash: da89fb8684457d89f617a269f7861301
+      Hash: 9af7957f19874e4ebd18266d412be009
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: EscapistMovement
@@ -1190,6 +1227,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: MainMenu
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
