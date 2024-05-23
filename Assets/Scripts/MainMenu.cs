@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     {
         playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
         transform.GetChild(2).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public void startGame()
@@ -21,6 +22,24 @@ public class MainMenu : MonoBehaviour
     public void startGameFromPlayer()
     {
         transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    public void openCredits()
+    {
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(true);
+    }
+    public void openControls()
+    {
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(true);
+    }
+
+    public void closeCredits()
+    {
+        transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public void setGodMode()
