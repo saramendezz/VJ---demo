@@ -17,11 +17,16 @@ public class EscapistMovement : MonoBehaviour
     private float duckTime = 1.0f; // Time to stay ducked
     private float duckTimer = 0;
 
+    private Quaternion desiredRotation;
+    private float rotationSpeed = 10f;
+    private bool isRotating = false;
+
     private void Start()
     {
         startState = true;
         alive = true;
         m_Animator = GetComponent<Animator>();
+        desiredRotation = transform.rotation;
     }
 
     void FixedUpdate()
@@ -34,6 +39,11 @@ public class EscapistMovement : MonoBehaviour
         rb.MovePosition(targetPosition);
 
         speed += fowardSpeedMult;
+
+        if (isRotating)
+        {
+            RotateSmoothly();
+        }
     }
 
     void Update()
@@ -68,6 +78,8 @@ public class EscapistMovement : MonoBehaviour
 
     void MoveLane(bool goingRight)
     {
+        if (isRotating) return; // Prevent lane change while rotating
+
         int targetLane = desiredLane + (goingRight ? 1 : -1);
 
         if (targetLane < 0 || targetLane > 2) return; // If out of bounds, return
@@ -86,28 +98,53 @@ public class EscapistMovement : MonoBehaviour
         desiredLane = targetLane;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        Debug.Log("Trigger Entered: " + other.tag); // Debug line to check if trigger is detected
+
+        if (other.CompareTag("TurnLeft"))
         {
-            // Detect obstacle and change lane if possible
-            if (desiredLane == 0)
+            AlignToCenter();
+            RotatePlayer(-90);
+        }
+        else if (other.CompareTag("TurnRight"))
+        {
+            AlignToCenter();
+            RotatePlayer(90);
+        }
+    }
+
+    private bool IsLaneClear(int lane)
+    {
+        Vector3 targetPosition = transform.position + Vector3.right * (lane - desiredLane) * laneDistance;
+        RaycastHit hit;
+        if (Physics.Raycast(targetPosition, transform.forward, out hit, 2f))
+        {
+            if (hit.collider.CompareTag("Obstacle"))
             {
-                desiredLane = 1; // Move to the middle lane if in the left lane
-            }
-            else if (desiredLane == 2)
-            {
-                desiredLane = 1; // Move to the middle lane if in the right lane
-            }
-            else
-            {
-                desiredLane = 0; // Move to the left lane if in the middle lane
+                return false; // Lane is not clear
             }
         }
-        else if (collision.gameObject.CompareTag("DuckObstacle"))
+        return true; // Lane is clear
+    }
+
+    private void JumpOrDuck()
+    {
+        // Implement logic to jump or duck if stuck between obstacles
+        if (IsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            m_Animator.SetTrigger("startJumping");
+        }
+        else
         {
             StartDucking();
         }
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, out _, 0.1f);
     }
 
     private void DetectObstacles()
@@ -145,5 +182,29 @@ public class EscapistMovement : MonoBehaviour
         m_Animator.ResetTrigger("startDucking");
         box.height = 2; // Return to the normal height
         box.center = new Vector3(box.center.x, 1f, box.center.z); // Reset the collider center
+    }
+
+    private void RotatePlayer(float rotation)
+    {
+        desiredRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
+        isRotating = true;
+    }
+
+    private void RotateSmoothly()
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+
+        if (Quaternion.Angle(transform.rotation, desiredRotation) < 0.1f)
+        {
+            isRotating = false;
+        }
+    }
+
+    private void AlignToCenter()
+    {
+        // Align the player to the center of the current lane before turning
+        Vector3 targetPosition = rb.position;
+        targetPosition.x = GetLanePosition();
+        rb.position = targetPosition;
     }
 }

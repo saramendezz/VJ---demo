@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4639114062718297502}
   m_Layer: 0
   m_Name: GroundTile_TurnL
-  m_TagString: Untagged
+  m_TagString: TurnLeft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
