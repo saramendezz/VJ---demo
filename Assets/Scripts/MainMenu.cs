@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // Asegúrate de añadir esta línea
 using UnityEngine.Playables;
 using UnityEngine.UIElements;
 
@@ -64,9 +65,8 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(2).gameObject.SetActive(false);
     }
 
-    public void exitGame() 
+    public void exitGame()
     {
-        Application.Quit();
-    
+        SceneManager.LoadScene(1); // Cambia a la escena con el índice 1
     }
 }
