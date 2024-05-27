@@ -166,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8571183451964977052}
   - component: {fileID: 4099382091632650627}
-  - component: {fileID: 4639114062718297502}
+  - component: {fileID: 1666717198872801576}
   m_Layer: 0
   m_Name: GroundTile_TurnL
   m_TagString: TurnLeft
@@ -216,7 +216,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 0, z: 10}
---- !u!114 &4639114062718297502
+--- !u!114 &1666717198872801576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8796865450041279733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15ad2db386c67874bb4d1dc742582847, type: 3}
+  m_Script: {fileID: 11500000, guid: f7e259e9541472b4394feea0941e162f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &129835808291983755

@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -25,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = true, isGodMode;
     private Animator m_Animator;
     private float offsetJumpAnimation;
-    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit;
+    private bool isJumping, isJumpAnim, isGoingDown, isRotating, isHit, isInsideTurn;
     private float bottomCoordStart;
     private float currentTimeSpeed, subsSpeed;
     private Directions currentDirection;
@@ -41,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         startState = true; alive = true; isJumping = false; isGoingDown = false; isGrounded = true;  isJumpAnim = false; isRotating = false; isHit = false; isGodMode = false;
+        isInsideTurn = false;
         defaultXZposition = new Vector2(0, 0);
         m_Animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
@@ -112,15 +111,17 @@ public class PlayerMovement : MonoBehaviour
             pActive = true;
         }
 
+        if (isRotating) RotateSmoothly();
+
         if (startState || isGodMode) return;
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && !isInsideTurn)
         {
             //Mathf.Clamp(value, min, max)
             if (desiredLane == 2) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2); // Prevents exceeding lane bounds
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !isInsideTurn)
         {
             if (desiredLane == 0) setIsHit();
             desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2); // Prevents exceeding lane bounds
@@ -158,7 +159,6 @@ public class PlayerMovement : MonoBehaviour
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
         }
 
-        if (isRotating) RotateSmoothly();
         if (isHit) ReturnSpeedSmoothly();
 
         if (!pActive && !isGodMode && Input.GetKeyDown(KeyCode.G))
@@ -173,10 +173,14 @@ public class PlayerMovement : MonoBehaviour
         }   
     }
 
-    float GetLanePosition()
+    public float GetLanePosition()
     {
         // Calculate X position based on desired lane
         return (desiredLane - 1) * laneDistance;
+    }
+    public bool getIsGodMode()
+    {
+        return isGodMode;
     }
 
     public int getCurrentDirection()
@@ -211,6 +215,16 @@ public class PlayerMovement : MonoBehaviour
         //isXdirection = !isXdirection;
     }
 
+    public void setInsideTurn(bool isInside)
+    {
+        isInsideTurn = isInside;
+    }
+
+    public void setDesiredLanePl(int line)
+    {
+        desiredLane = line;
+    }
+
     public void turnPlayer(int direction)
     {
         switch (direction)
@@ -234,8 +248,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void rotatePlayer(float rotation)
     {
-        if (rotation == 90) desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2);
-        else desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2);
+        if (rotation == 90) desiredLane = Mathf.Clamp(desiredLane, 0, 2);
+        else desiredLane = Mathf.Clamp(desiredLane, 0, 2);
 
         // rb.MoveRotation(rb.rotation * Quaternion.Euler(0, rotation, 0));
         desiredRotation = rb.rotation * Quaternion.Euler(0, rotation, 0);

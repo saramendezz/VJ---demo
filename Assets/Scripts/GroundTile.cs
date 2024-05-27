@@ -10,9 +10,15 @@ public class GroundTile : MonoBehaviour
     public GameObject obstaclePrefab05;
 
     GroundSpawner groundSpawner;
+    EscapistMovement eMovement;
+    PlayerMovement pMovement;
+
+    private int freeLine;
     // Start is called before the first frame update
     void Start()
     {
+        eMovement = GameObject.FindObjectOfType<EscapistMovement>();
+        pMovement = GameObject.FindObjectOfType<PlayerMovement>();
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
         SpawnObstacle();
         SpawnCoins();
@@ -24,6 +30,19 @@ public class GroundTile : MonoBehaviour
         {
             groundSpawner.SpawnTile();
             Destroy(gameObject, 2);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Escapist")
+        {
+            // Debug.Log("Trigger Entered: " + other.gameObject.name);
+            eMovement.setDesiredLaneEsc(freeLine-1);
+        }
+        else if (other.gameObject.name == "Player")
+        {
+            if (pMovement.getIsGodMode()) pMovement.setDesiredLanePl(freeLine-1);
         }
     }
 
@@ -78,6 +97,7 @@ public class GroundTile : MonoBehaviour
             if (obstacleSpawnIndex == 4) obstacleSpawnIndex = 1;
             spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
         }
+        freeLine = obstacleSpawnIndex;
         //Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 

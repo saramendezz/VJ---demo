@@ -368,6 +368,8 @@
 "Assets/Scripts/PlayerMovement.cs"
 "Assets/Scripts/SpawnTile.cs"
 "Assets/Scripts/TurnTile.cs"
+"Assets/Scripts/TurnTileL.cs"
+"Assets/Scripts/TurnTileR.cs"
 -langversion:9.0
 
 /deterministic

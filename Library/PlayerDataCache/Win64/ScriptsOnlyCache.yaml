@@ -3,15 +3,19 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraFollow
     - Coin
+    - CreditsMusic
     - EscapistMovement
     - GameManager
     - GroundSpawner
     - GroundTile
     - MainMenu
+    - MainMenuMusic
     - Obstacle
     - PlayerMovement
     - SpawnTile
     - TurnTile
+    - TurnTileL
+    - TurnTileR
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro:
@@ -120,6 +124,61 @@ ScriptsOnlyBuild:
     fullTypeName: MainMenu
     methodName: exitGame
   sceneClasses:
+    Assets/Scenes/Credits.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1648}
+    - Class: 114
+      Script: {instanceID: 2676}
+    - Class: 114
+      Script: {instanceID: 2878}
+    - Class: 114
+      Script: {instanceID: 5140}
+    - Class: 114
+      Script: {instanceID: 5702}
+    - Class: 114
+      Script: {instanceID: 5850}
+    - Class: 114
+      Script: {instanceID: 6164}
+    - Class: 114
+      Script: {instanceID: 8046}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/SampleScene.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -151,6 +210,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 90
@@ -166,65 +227,71 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1648}
     - Class: 114
-      Script: {instanceID: 1732}
+      Script: {instanceID: 1748}
     - Class: 114
-      Script: {instanceID: 1750}
+      Script: {instanceID: 2246}
     - Class: 114
-      Script: {instanceID: 2122}
+      Script: {instanceID: 2676}
     - Class: 114
-      Script: {instanceID: 2250}
+      Script: {instanceID: 2694}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2878}
     - Class: 114
-      Script: {instanceID: 2698}
+      Script: {instanceID: 3172}
     - Class: 114
-      Script: {instanceID: 2882}
+      Script: {instanceID: 3624}
     - Class: 114
-      Script: {instanceID: 3176}
-    - Class: 114
-      Script: {instanceID: 3628}
+      Script: {instanceID: 4076}
     - Class: 114
       Script: {instanceID: 4080}
     - Class: 114
-      Script: {instanceID: 4084}
+      Script: {instanceID: 4182}
     - Class: 114
-      Script: {instanceID: 4186}
+      Script: {instanceID: 4434}
     - Class: 114
-      Script: {instanceID: 4438}
+      Script: {instanceID: 4926}
     - Class: 114
-      Script: {instanceID: 4712}
+      Script: {instanceID: 5140}
     - Class: 114
-      Script: {instanceID: 4932}
+      Script: {instanceID: 5176}
     - Class: 114
-      Script: {instanceID: 5146}
+      Script: {instanceID: 5234}
     - Class: 114
-      Script: {instanceID: 5182}
+      Script: {instanceID: 5396}
     - Class: 114
-      Script: {instanceID: 5240}
+      Script: {instanceID: 5702}
     - Class: 114
-      Script: {instanceID: 5402}
+      Script: {instanceID: 5850}
     - Class: 114
-      Script: {instanceID: 5708}
+      Script: {instanceID: 5864}
     - Class: 114
-      Script: {instanceID: 5856}
+      Script: {instanceID: 6164}
     - Class: 114
-      Script: {instanceID: 5870}
+      Script: {instanceID: 6198}
     - Class: 114
-      Script: {instanceID: 6170}
+      Script: {instanceID: 6570}
     - Class: 114
-      Script: {instanceID: 6204}
+      Script: {instanceID: 6830}
     - Class: 114
-      Script: {instanceID: 6300}
+      Script: {instanceID: 7534}
     - Class: 114
-      Script: {instanceID: 6578}
+      Script: {instanceID: 7802}
     - Class: 114
-      Script: {instanceID: 6678}
+      Script: {instanceID: 8030}
     - Class: 114
-      Script: {instanceID: 6840}
+      Script: {instanceID: 8034}
     - Class: 114
-      Script: {instanceID: 7544}
+      Script: {instanceID: 8038}
     - Class: 114
-      Script: {instanceID: 7812}
+      Script: {instanceID: 8042}
+    - Class: 114
+      Script: {instanceID: 8050}
+    - Class: 114
+      Script: {instanceID: 8054}
+    - Class: 114
+      Script: {instanceID: 44592}
+    - Class: 114
+      Script: {instanceID: 44596}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -264,12 +331,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Image
-  - hash:
-      serializedVersion: 2
-      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: GameManager
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -318,12 +379,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnMouseExitMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 751e5bae2a317288c2ab58d66687092b
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: TurnTile
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -735,12 +790,6 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: MainMenu
-  - hash:
-      serializedVersion: 2
-      Hash: 751e5bae2a317288c2ab58d66687092b
     assemblyName: Unity.Timeline
     namespaceName: UnityEngine.Timeline
     className: ActivationPlayableAsset
@@ -986,12 +1035,6 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: b7df98c2e6c040d22b75936d59b0061b
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: Coin
-  - hash:
-      serializedVersion: 2
       Hash: f4f39b64f410b0cd98b49df4bad0eb7e
     assemblyName: Unity.TextMeshPro
     namespaceName: TMPro
@@ -1032,12 +1075,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnCollisionExitMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 751e5bae2a317288c2ab58d66687092b
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: SpawnTile
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -1190,7 +1227,7 @@ ScriptsOnlyBuild:
     className: LensDistortion
   - hash:
       serializedVersion: 2
-      Hash: 9af7957f19874e4ebd18266d412be009
+      Hash: a2a2766d83de421bd3f4fa03a03d5b94
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: EscapistMovement
@@ -1242,7 +1279,62 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: MainMenu
+  - hash:
+      serializedVersion: 2
+      Hash: 4bc48f90edf08f000546e314baf1659d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: MainMenuMusic
+  - hash:
+      serializedVersion: 2
+      Hash: b7df98c2e6c040d22b75936d59b0061b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Coin
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TurnTile
+  - hash:
+      serializedVersion: 2
+      Hash: c5ccb6e7fd38a119c81243dc12a25afc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CreditsMusic
+  - hash:
+      serializedVersion: 2
+      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GameManager
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: SpawnTile
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TurnTileL
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TurnTileR
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
+  - Assets/Scenes/Credits.unity
   playerPath: C:/Users/roger/repos/fib-upc/testBuild/Demo.exe

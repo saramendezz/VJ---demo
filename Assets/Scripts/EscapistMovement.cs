@@ -1,4 +1,6 @@
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EscapistMovement : MonoBehaviour
 {
@@ -8,42 +10,70 @@ public class EscapistMovement : MonoBehaviour
     public Rigidbody rb;
     public CapsuleCollider box;
 
-    private int desiredLane = 1; // 0: left, 1: middle, 2: right
-    private Animator m_Animator;
     private readonly float fowardSpeedMult = 0.0003f;
 
-    bool alive, startState;
+    private int desiredLane = 1; // 0: left, 1: middle, 2: right
+    private Animator m_Animator;
+
+    bool startState;
     private bool isDucking = false;
     private float duckTime = 1.0f; // Time to stay ducked
     private float duckTimer = 0;
 
-    private Quaternion desiredRotation;
-    private float rotationSpeed = 10f;
+
     private bool isRotating = false;
+
+    private Directions currentDirection;
+    private Vector2 defaultXZposition;
+    private Quaternion desiredRotation;
+    private float curvePtr, curveSpeed;
+
+    public AnimationCurve curve;
 
     private void Start()
     {
         startState = true;
-        alive = true;
         m_Animator = GetComponent<Animator>();
+        
         desiredRotation = transform.rotation;
+        curvePtr = 0f; curveSpeed = 0.01f;
+
+        currentDirection = Directions.FOWARD;
+        defaultXZposition = new Vector2(0, 0);
     }
 
     void FixedUpdate()
     {
-        if (!alive || startState) return;
+        if (startState) return;
 
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
-        Vector3 targetPosition = rb.position + forwardMove;
-        targetPosition.x = Mathf.Lerp(rb.position.x, GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+        Vector3 targetPosition = rb.position;
+        Vector3 forwardMove = speed * Time.fixedDeltaTime * transform.forward;
+        targetPosition += forwardMove;
+        /*
+        if (isXdirection) targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+        else targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
+         */
+        switch (currentDirection)
+        {
+            case Directions.FOWARD:
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
+                break;
+            case Directions.BACK:
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x - GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
+                break;
+            case Directions.RIGHT:
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y - GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
+                break;
+            case Directions.LEFT:
+                targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
+                break;
+            default:
+                targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), curve.Evaluate(Time.fixedDeltaTime * 10)); // Smooth transition to the target lane
+                break;
+        }
         rb.MovePosition(targetPosition);
 
         speed += fowardSpeedMult;
-
-        if (isRotating)
-        {
-            RotateSmoothly();
-        }
     }
 
     void Update()
@@ -51,7 +81,7 @@ public class EscapistMovement : MonoBehaviour
         if (startState) return;
 
         // Automatically switch lanes to avoid obstacles
-        DetectObstacles();
+        //DetectObstacles();
 
         // Handle ducking timer
         if (isDucking)
@@ -62,6 +92,7 @@ public class EscapistMovement : MonoBehaviour
                 StopDucking();
             }
         }
+        if (isRotating) RotateSmoothly();
     }
 
     float GetLanePosition()
@@ -70,62 +101,65 @@ public class EscapistMovement : MonoBehaviour
         return (desiredLane - 1) * laneDistance;
     }
 
+    public void setDesiredLaneEsc(int line)
+    {
+        desiredLane = line;
+    }
+
+    public void turnEscapist(int direction)
+    {
+        switch (direction)
+        {
+            case 0:
+                currentDirection = Directions.FOWARD;
+                break;
+            case 1:
+                currentDirection = Directions.BACK;
+                break;
+            case 2:
+                currentDirection = Directions.RIGHT;
+                break;
+            case 3:
+                currentDirection = Directions.LEFT;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void rotateEscapist(float rotation)
+    {
+        if (rotation == 90) desiredLane = Mathf.Clamp(desiredLane - 1, 0, 2);
+        else desiredLane = Mathf.Clamp(desiredLane + 1, 0, 2);
+
+        // rb.MoveRotation(rb.rotation * Quaternion.Euler(0, rotation, 0));
+        desiredRotation = rb.rotation * Quaternion.Euler(0, rotation, 0);
+        isRotating = true;
+    }
+
+    public void setMiddlePosition(Vector3 middlePos)
+    {
+        defaultXZposition.x = middlePos.x; // set default x
+        defaultXZposition.y = middlePos.z; // set default y
+    }
+
+    private void RotateSmoothly()
+    {
+        curvePtr += curveSpeed;
+
+        rb.MoveRotation(Quaternion.Lerp(transform.rotation, desiredRotation, curve.Evaluate(curvePtr)));
+
+        if (Quaternion.Angle(transform.rotation, desiredRotation) < 0.1f)
+        {
+            isRotating = false;
+            curvePtr = 0f;
+        }
+    }
+
     public void startRun()
     {
         startState = false;
         m_Animator.SetTrigger("startRuning");
-    }
-
-    void MoveLane(bool goingRight)
-    {
-        if (isRotating) return; // Prevent lane change while rotating
-
-        int targetLane = desiredLane + (goingRight ? 1 : -1);
-
-        if (targetLane < 0 || targetLane > 2) return; // If out of bounds, return
-
-        // Check if there's an obstacle in the target lane
-        Vector3 targetPosition = transform.position + Vector3.right * (targetLane - desiredLane) * laneDistance;
-        RaycastHit hit;
-        if (Physics.Raycast(targetPosition, transform.forward, out hit, 2f))
-        {
-            if (hit.collider.CompareTag("Obstacle"))
-            {
-                return; // If there's an obstacle, don't move to that lane
-            }
-        }
-
-        desiredLane = targetLane;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Trigger Entered: " + other.tag); // Debug line to check if trigger is detected
-
-        if (other.CompareTag("TurnLeft"))
-        {
-            AlignToCenter();
-            RotatePlayer(-90);
-        }
-        else if (other.CompareTag("TurnRight"))
-        {
-            AlignToCenter();
-            RotatePlayer(90);
-        }
-    }
-
-    private bool IsLaneClear(int lane)
-    {
-        Vector3 targetPosition = transform.position + Vector3.right * (lane - desiredLane) * laneDistance;
-        RaycastHit hit;
-        if (Physics.Raycast(targetPosition, transform.forward, out hit, 2f))
-        {
-            if (hit.collider.CompareTag("Obstacle"))
-            {
-                return false; // Lane is not clear
-            }
-        }
-        return true; // Lane is clear
     }
 
     private void JumpOrDuck()
@@ -147,22 +181,6 @@ public class EscapistMovement : MonoBehaviour
         return Physics.Raycast(transform.position, Vector3.down, out _, 0.1f);
     }
 
-    private void DetectObstacles()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 2f))
-        {
-            if (hit.collider.CompareTag("Obstacle"))
-            {
-                MoveLane(desiredLane == 0 || (desiredLane == 1 && Random.value > 0.5f));
-            }
-            else if (hit.collider.CompareTag("DuckObstacle"))
-            {
-                StartDucking();
-            }
-        }
-    }
-
     private void StartDucking()
     {
         if (isDucking) return;
@@ -182,29 +200,5 @@ public class EscapistMovement : MonoBehaviour
         m_Animator.ResetTrigger("startDucking");
         box.height = 2; // Return to the normal height
         box.center = new Vector3(box.center.x, 1f, box.center.z); // Reset the collider center
-    }
-
-    private void RotatePlayer(float rotation)
-    {
-        desiredRotation = Quaternion.Euler(0, rotation, 0) * transform.rotation;
-        isRotating = true;
-    }
-
-    private void RotateSmoothly()
-    {
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
-
-        if (Quaternion.Angle(transform.rotation, desiredRotation) < 0.1f)
-        {
-            isRotating = false;
-        }
-    }
-
-    private void AlignToCenter()
-    {
-        // Align the player to the center of the current lane before turning
-        Vector3 targetPosition = rb.position;
-        targetPosition.x = GetLanePosition();
-        rb.position = targetPosition;
     }
 }
