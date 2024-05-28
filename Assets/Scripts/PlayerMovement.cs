@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public AnimationCurve curve;
     public MusicMenu musicMenu;
     public AudioClip runingSound;
+    public AudioClip jumpSound;
 
     private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0002f, fowardSpeedMult = 0.0003f;
 
@@ -59,9 +60,9 @@ public class PlayerMovement : MonoBehaviour
         subsSpeed = speed;
         mainMenu = GameObject.FindObjectOfType<MainMenu >();
         soundPlayer = gameObject.AddComponent<AudioSource>();
+        soundPlayer.volume = 0.5f;
         soundPlayer.clip = runingSound;
         soundPlayer.loop = true;
-        soundPlayer.volume = 0.5f;
         rayRange = 5f;
         escapistMovement = GameObject.FindObjectOfType<EscapistMovement>();
         jumpForce = 5f;
@@ -74,10 +75,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 targetPosition = rb.position;
         Vector3 forwardMove = speed * Time.fixedDeltaTime * transform.forward;
         targetPosition += forwardMove;
-        /*
-        if (isXdirection) targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
-        else targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
-         */
         switch (currentDirection)
         {
             case Directions.FOWARD:
@@ -125,10 +122,14 @@ public class PlayerMovement : MonoBehaviour
                 isGodMode = false;
                 pActive = true;
             }
-            if (DetectObstacleInDirection() && isGrounded)
+            if (DetectObstacleInDirection() && isGrounded && !isInsideTurn)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 m_Animator.SetTrigger("startJumping");
+                soundPlayer.clip = jumpSound;
+                soundPlayer.time = 1.4f;
+                soundPlayer.loop = false;
+                soundPlayer.Play();
                 isJumping = true; isJumpAnim = true;
                 isGrounded = false;
                 isGoingDown = false;
@@ -143,6 +144,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isJumpAnim = false;
                     m_Animator.SetTrigger("stopJumping");
+                    soundPlayer.clip = runingSound;
+                    soundPlayer.time = 0.8f;
+                    soundPlayer.loop = true;
+                    soundPlayer.Play();
                 }
                 if (offsetJumpAnimation < 0.01f && isGoingDown)
                 {
@@ -171,7 +176,10 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            soundPlayer.Stop();
+            soundPlayer.clip = jumpSound;
+            soundPlayer.time = 1.4f;
+            soundPlayer.loop = false;
+            soundPlayer.Play();
             m_Animator.SetTrigger("startJumping");
             isJumping = true; isJumpAnim = true;
             isGrounded = false;
@@ -186,7 +194,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 isJumpAnim = false;
                 m_Animator.SetTrigger("stopJumping");
+                soundPlayer.clip = runingSound;
                 soundPlayer.time = 0.8f;
+                soundPlayer.loop = true;
                 soundPlayer.Play();
             }
             if (offsetJumpAnimation < 0.01f && isGoingDown)
@@ -200,8 +210,19 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow) && isGrounded)
         {
             m_Animator.SetTrigger("startDucking");
+            soundPlayer.clip = jumpSound;
+            soundPlayer.time = 13.7f;
+            soundPlayer.loop = false;
+            soundPlayer.Play();
             box.height = 1; // Suponiendo que la altura normal es 2
             box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Ajusta el centro del collider
+        }
+        if (soundPlayer.clip == jumpSound && soundPlayer.time > 14.4f)
+        {
+            soundPlayer.clip = runingSound;
+            soundPlayer.time = 0.8f;
+            soundPlayer.loop = true;
+            soundPlayer.Play();
         }
 
         if (isHit) ReturnSpeedSmoothly();

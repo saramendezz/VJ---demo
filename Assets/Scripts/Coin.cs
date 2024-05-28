@@ -3,14 +3,16 @@ using System.Collections;
 
 public class Coin : MonoBehaviour
 {
-    public float turnSpeed = 90f;
+    private float turnSpeed;
     public AudioClip coinSound; // Nuevo AudioClip para el sonido de la moneda
     public AnimationCurve curve;
 
     private Vector3 finalPosition;
     private AudioSource audioSource;
+    private bool isHit;
 
     MainMenu menu;
+    PlayerMovement playerMovement;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,9 +32,12 @@ public class Coin : MonoBehaviour
     void Start()
     {
         menu = GameObject.FindObjectOfType<MainMenu>();
-        // Add an AudioSource component if not already present
+        playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
+        // Add an AudioSource compon    ent if not already present
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = coinSound;
+        isHit = false;
+        turnSpeed = Random.Range(25f, 90f);
     }
 
     public void setPosition(Vector3 pos)
@@ -44,7 +49,15 @@ public class Coin : MonoBehaviour
     void Update()
     {
         transform.Rotate(0, 0, turnSpeed * Time.deltaTime);
-        Vector3 upPos = Vector3.Lerp(transform.position, finalPosition, curve.Evaluate(Time.fixedDeltaTime * 10));
+        Vector3 upPos;
+        if (isHit)
+        {
+            Vector3 playHead = playerMovement.transform.position;
+            playHead.y += 1.0f;
+            upPos = Vector3.Lerp(transform.position, playHead, curve.Evaluate(Time.fixedDeltaTime * 10));
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0f, 0f, 0f), curve.Evaluate(Time.fixedDeltaTime * 5));
+        }
+        else upPos = Vector3.Lerp(transform.position, finalPosition, curve.Evaluate(Time.fixedDeltaTime * 10));
         transform.SetPositionAndRotation(upPos, transform.rotation);
         //Debug.Log(upPos);
         //Debug.Log(finalPosition);
@@ -54,6 +67,7 @@ public class Coin : MonoBehaviour
     {
         // Play the coin sound
         audioSource.Play();
+        isHit = true;
 
         // Wait for 1 second
         yield return new WaitForSeconds(1f);

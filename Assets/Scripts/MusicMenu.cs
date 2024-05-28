@@ -12,12 +12,15 @@ public class MusicMenu : MonoBehaviour
         mainSource = gameObject.AddComponent<AudioSource>();
         mainSource.clip = mainMenuMusic;
         mainSource.loop = true;
+        mainSource.volume = 0.7f;
         mainSource.Play();
     }
 
     public void startRuningMusic()
     {
         mainSource.clip = runingMusic;
+        mainSource.volume = 1.0f;
+        mainSource.loop = true;
         mainSource.Play();
     }
 

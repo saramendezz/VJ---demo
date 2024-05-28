@@ -8,17 +8,29 @@ public class MainMenu : MonoBehaviour
     public int score, ctrSlowedTimes;
     public TextMeshProUGUI slowedTimes;
     public TextMeshProUGUI scoreText;
+    public MusicMenu musicMenu;
+    public AudioClip soundFx;
+    public AudioClip startBtn;
+
+    private AudioSource soundPlayer;
 
     private void Start()
     {
         playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
         transform.GetChild(2).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
+        transform.GetChild(4).gameObject.SetActive(false);
         score = 0;
         ctrSlowedTimes = 0;
         slowedTimes.text = "Times Slowed: " + ctrSlowedTimes;
         slowedTimes.color = Color.gray;
         scoreText.text = "Score: " + score;
+
+        soundPlayer = gameObject.AddComponent<AudioSource>();
+        soundPlayer.volume = 1.0f;
+        soundPlayer.clip = soundFx;
+        soundPlayer.time = 1.5f;
+        soundPlayer.loop = false;
     }
 
     public void incrementSlow()
@@ -38,32 +50,57 @@ public class MainMenu : MonoBehaviour
 
     public void startGame()
     {
+        soundPlayer.clip = startBtn;
+        soundPlayer.loop = false;
+        soundPlayer.Play();
+        musicMenu.startRuningMusic();
         playerMovement.startGame();
         transform.GetChild(1).gameObject.SetActive(false);
     }
 
     public void startGameFromPlayer()
     {
+        soundPlayer.clip = startBtn;
+        soundPlayer.loop = false;
+        soundPlayer.Play();
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
+        transform.GetChild(4).gameObject.SetActive(false);
     }
 
     public void openCredits()
     {
+        soundPlayer.Play();
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(true);
         SceneManager.LoadScene(1);
     }
     public void openControls()
     {
+        soundPlayer.Play();
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(true);
+    }
+    public void openInstructions()
+    {
+        soundPlayer.Play();
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(4).gameObject.SetActive(true);
     }
 
     public void closeControls()
     {
+        soundPlayer.Play();
         transform.GetChild(1).gameObject.SetActive(true);
         transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+
+    public void closeInstructions()
+    {
+        soundPlayer.Play();
+        transform.GetChild(1).gameObject.SetActive(true);
+        transform.GetChild(4).gameObject.SetActive(false);
     }
 
     public void setGodMode()

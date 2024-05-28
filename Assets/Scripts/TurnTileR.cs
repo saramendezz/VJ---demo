@@ -46,6 +46,7 @@ public class TurnTileR : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
+            playerMovement.setInsideTurn(true);
             if (playerMovement.getIsGodMode())
             {
                 groundSpawner.endDoubleDirection(nextRight ? 0 : 1);
@@ -75,7 +76,6 @@ public class TurnTileR : MonoBehaviour
             else
             {
                 isInside = true;
-                playerMovement.setInsideTurn(true);
             }
         }
         else if (other.gameObject.name == "Escapist")

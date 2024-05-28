@@ -3,13 +3,14 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraFollow
     - Coin
+    - CreditsCanva
     - CreditsMusic
     - EscapistMovement
     - GameManager
     - GroundSpawner
     - GroundTile
     - MainMenu
-    - MainMenuMusic
+    - MusicMenu
     - Obstacle
     - PlayerMovement
     - SpawnTile
@@ -57,7 +58,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.HorizontalLayoutGroup
     - UnityEngine.UI.Image
-    - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
   serializedClasses:
     Unity.TextMeshPro:
@@ -95,7 +95,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.AnimationTriggers
     - UnityEngine.UI.Button/ButtonClickedEvent
     - UnityEngine.UI.ColorBlock
-    - UnityEngine.UI.FontData
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
     - UnityEngine.UI.Navigation
     - UnityEngine.UI.SpriteState
@@ -108,10 +107,16 @@ ScriptsOnlyBuild:
     methodName: startGame
   - assembly: Assembly-CSharp
     fullTypeName: MainMenu
+    methodName: openInstructions
+  - assembly: Assembly-CSharp
+    fullTypeName: MainMenu
+    methodName: closeInstructions
+  - assembly: Assembly-CSharp
+    fullTypeName: MainMenu
     methodName: openControls
   - assembly: Assembly-CSharp
     fullTypeName: MainMenu
-    methodName: closeCredits
+    methodName: closeControls
   - assembly: Assembly-CSharp
     fullTypeName: EscapistMovement
     methodName: startRun
@@ -125,8 +130,8 @@ ScriptsOnlyBuild:
     fullTypeName: MainMenu
     methodName: exitGame
   - assembly: Assembly-CSharp
-    fullTypeName: MainMenu
-    methodName: goBack
+    fullTypeName: CreditsCanva
+    methodName: closeCredits
   sceneClasses:
     Assets/Scenes/Credits.unity:
     - Class: 1
@@ -156,13 +161,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1648}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2678}
     - Class: 114
-      Script: {instanceID: 2882}
+      Script: {instanceID: 2880}
     - Class: 114
-      Script: {instanceID: 3176}
+      Script: {instanceID: 3174}
     - Class: 114
-      Script: {instanceID: 4712}
+      Script: {instanceID: 4216}
     - Class: 114
       Script: {instanceID: 5146}
     - Class: 114
@@ -172,7 +177,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6172}
     - Class: 114
-      Script: {instanceID: 7534}
+      Script: {instanceID: 6580}
+    - Class: 114
+      Script: {instanceID: 8032}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -237,29 +244,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1648}
     - Class: 114
-      Script: {instanceID: 1732}
+      Script: {instanceID: 1748}
     - Class: 114
-      Script: {instanceID: 1750}
+      Script: {instanceID: 2120}
     - Class: 114
-      Script: {instanceID: 2122}
+      Script: {instanceID: 2248}
     - Class: 114
-      Script: {instanceID: 2250}
+      Script: {instanceID: 2678}
     - Class: 114
-      Script: {instanceID: 2680}
+      Script: {instanceID: 2696}
     - Class: 114
-      Script: {instanceID: 2698}
+      Script: {instanceID: 2880}
     - Class: 114
-      Script: {instanceID: 2882}
+      Script: {instanceID: 3174}
     - Class: 114
-      Script: {instanceID: 3176}
+      Script: {instanceID: 3626}
     - Class: 114
-      Script: {instanceID: 3628}
+      Script: {instanceID: 4078}
     - Class: 114
-      Script: {instanceID: 4080}
+      Script: {instanceID: 4082}
     - Class: 114
-      Script: {instanceID: 4084}
-    - Class: 114
-      Script: {instanceID: 4186}
+      Script: {instanceID: 4184}
     - Class: 114
       Script: {instanceID: 4438}
     - Class: 114
@@ -275,8 +280,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5240}
     - Class: 114
-      Script: {instanceID: 5402}
-    - Class: 114
       Script: {instanceID: 5520}
     - Class: 114
       Script: {instanceID: 5710}
@@ -291,19 +294,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 6250}
     - Class: 114
-      Script: {instanceID: 6304}
+      Script: {instanceID: 6580}
     - Class: 114
-      Script: {instanceID: 6582}
+      Script: {instanceID: 6680}
     - Class: 114
-      Script: {instanceID: 6682}
+      Script: {instanceID: 6842}
     - Class: 114
-      Script: {instanceID: 6844}
+      Script: {instanceID: 7546}
     - Class: 114
-      Script: {instanceID: 7550}
+      Script: {instanceID: 7814}
     - Class: 114
-      Script: {instanceID: 7818}
+      Script: {instanceID: 7914}
     - Class: 114
-      Script: {instanceID: 7918}
+      Script: {instanceID: 8028}
+    - Class: 114
+      Script: {instanceID: 8036}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -343,12 +348,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Image
-  - hash:
-      serializedVersion: 2
-      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: GameManager
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -765,6 +764,12 @@ ScriptsOnlyBuild:
     className: UnityOnJointBreak2DMessageListener
   - hash:
       serializedVersion: 2
+      Hash: 086f6e6e4815c6c6fb91550421c78261
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CreditsCanva
+  - hash:
+      serializedVersion: 2
       Hash: f6831ac80ec81c5d5b370c0ed0fee997
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -813,7 +818,7 @@ ScriptsOnlyBuild:
     className: PostProcessVolume
   - hash:
       serializedVersion: 2
-      Hash: 4a8849b1cb26816c2c50990db522e3e1
+      Hash: efd70d8bd9826e742c00a5c01aa7eca4
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: MainMenu
@@ -987,10 +992,10 @@ ScriptsOnlyBuild:
     className: Text
   - hash:
       serializedVersion: 2
-      Hash: 4bc48f90edf08f000546e314baf1659d
+      Hash: aab2fb9a28c906a75407ff06b61820db
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: MainMenuMusic
+    className: MusicMenu
   - hash:
       serializedVersion: 2
       Hash: f6831ac80ec81c5d5b370c0ed0fee997
@@ -1023,7 +1028,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 5f268eb423ce66182bbe23d54b73c975
+      Hash: ce203fffda54aeb652abba7872be6a02
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: PlayerMovement
@@ -1075,12 +1080,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: TurnTileL
-  - hash:
-      serializedVersion: 2
-      Hash: a5e807b90976055722e9a3336f1159a1
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: Coin
   - hash:
       serializedVersion: 2
       Hash: f4f39b64f410b0cd98b49df4bad0eb7e
@@ -1275,19 +1274,13 @@ ScriptsOnlyBuild:
     className: StateMachine
   - hash:
       serializedVersion: 2
-      Hash: c5ccb6e7fd38a119c81243dc12a25afc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: CreditsMusic
-  - hash:
-      serializedVersion: 2
       Hash: e0959e6b1ac2cd5e8efb65362252ce93
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: LensDistortion
   - hash:
       serializedVersion: 2
-      Hash: a2a2766d83de421bd3f4fa03a03d5b94
+      Hash: 55bf6bc50337a902d516a51f0294d4fa
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: EscapistMovement
@@ -1345,8 +1338,26 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: ced2ef3d5550a4e1d0dc19728b773aeb
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Coin
+  - hash:
+      serializedVersion: 2
+      Hash: c5ccb6e7fd38a119c81243dc12a25afc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CreditsMusic
+  - hash:
+      serializedVersion: 2
+      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GameManager
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
   - Assets/Scenes/Credits.unity
-  playerPath: C:/Users/roger/repos/fib-upc/testBuild/Demo.exe
+  playerPath: C:/Users/roger/repos/fib-upc/entregaVJ/release/AntiSurfers.exe

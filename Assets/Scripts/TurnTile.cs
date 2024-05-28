@@ -47,6 +47,7 @@ public class TurnTile : MonoBehaviour
     {
         if (other.gameObject.name == "Player")
         {
+            playerMovement.setInsideTurn(true);
             if (playerMovement.getIsGodMode())
             {
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
@@ -76,7 +77,6 @@ public class TurnTile : MonoBehaviour
             else
             {
                 isInside = true;
-                playerMovement.setInsideTurn(true);
             }
         }
         else if (other.gameObject.name == "Escapist")

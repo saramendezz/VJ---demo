@@ -1,7 +1,4 @@
-using System.Security.Cryptography;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EscapistMovement : MonoBehaviour
 {
