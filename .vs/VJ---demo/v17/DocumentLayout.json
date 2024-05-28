@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\escapistmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\escapistmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\escapistmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,19 +19,19 @@
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\groundspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\turntile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\turntile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\turntile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|c:\\users\\roger\\repos\\fib-upc\\vj---demo\\assets\\scripts\\coin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\assets\\scripts\\coin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{19BC4C2C-3DFC-1336-66C3-F4C0FDDE4FAB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\coin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -66,8 +66,7 @@
               "RelativeToolTip": "Assets\\Scripts\\MainMenu.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T21:06:01.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T21:06:01.858Z"
             },
             {
               "$type": "Document",
@@ -79,8 +78,7 @@
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T21:07:40.939Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T21:07:40.939Z"
             },
             {
               "$type": "Document",
@@ -92,8 +90,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Coin.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T20:58:15.589Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T20:58:15.589Z"
             },
             {
               "$type": "Document",
@@ -103,7 +100,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\EscapistMovement.cs",
               "ToolTip": "C:\\Users\\roger\\repos\\fib-upc\\VJ---demo\\Assets\\Scripts\\EscapistMovement.cs",
               "RelativeToolTip": "Assets\\Scripts\\EscapistMovement.cs",
-              "ViewState": "AQIAAIAAAAAAAAAAAAAuwKEAAAArAAAA",
+              "ViewState": "AQIAAIAAAAAAAAAAAAA8wKEAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-27T17:16:22.576Z",
               "EditorCaption": ""
@@ -124,8 +121,7 @@
               "RelativeToolTip": "Assets\\Scripts\\TurnTile.cs",
               "ViewState": "AQIAAEgAAAAAAAAAAAAowHAAAABBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T17:42:06.049Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T17:42:06.049Z"
             },
             {
               "$type": "Document",
@@ -137,8 +133,7 @@
               "RelativeToolTip": "Assets\\Scripts\\TurnTileL.cs",
               "ViewState": "AQIAACIAAAAAAAAAAAAgwBIAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T18:02:42.756Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T18:02:42.756Z"
             },
             {
               "$type": "Document",
@@ -150,8 +145,7 @@
               "RelativeToolTip": "Assets\\Scripts\\GroundSpawner.cs",
               "ViewState": "AQIAAGkAAAAAAAAAAAAowB4AAABTAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T10:35:52.369Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-24T10:35:52.369Z"
             },
             {
               "$type": "Document",
@@ -176,8 +170,7 @@
               "RelativeToolTip": "Assets\\Scripts\\GroundTile.cs",
               "ViewState": "AQIAADUAAAAAAAAAAAAIwGUAAABJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T10:51:54.015Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-24T10:51:54.015Z"
             }
           ]
         }
