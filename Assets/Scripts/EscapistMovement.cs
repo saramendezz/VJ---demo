@@ -10,7 +10,7 @@ public class EscapistMovement : MonoBehaviour
     public Rigidbody rb;
     public CapsuleCollider box;
 
-    private readonly float fowardSpeedMult = 0.0003f;
+    private readonly float fowardSpeedMult = 0.00035f;
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private Animator m_Animator;
@@ -49,10 +49,6 @@ public class EscapistMovement : MonoBehaviour
         Vector3 targetPosition = rb.position;
         Vector3 forwardMove = speed * Time.fixedDeltaTime * transform.forward;
         targetPosition += forwardMove;
-        /*
-        if (isXdirection) targetPosition.x = Mathf.Lerp(rb.position.x, defaultXZposition.x + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
-        else targetPosition.z = Mathf.Lerp(rb.position.z, defaultXZposition.y + GetLanePosition(), Time.fixedDeltaTime * 10); // Smooth transition to the target lane
-         */
         switch (currentDirection)
         {
             case Directions.FOWARD:
@@ -80,17 +76,10 @@ public class EscapistMovement : MonoBehaviour
     {
         if (startState) return;
 
-        // Automatically switch lanes to avoid obstacles
-        //DetectObstacles();
-
         // Handle ducking timer
-        if (isDucking)
+        if (DetectObstacleInDirection())
         {
-            duckTimer += Time.deltaTime;
-            if (duckTimer >= duckTime)
-            {
-                StopDucking();
-            }
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         if (isRotating) RotateSmoothly();
     }
@@ -162,6 +151,33 @@ public class EscapistMovement : MonoBehaviour
         m_Animator.SetTrigger("startRuning");
     }
 
+    private bool DetectObstacleInDirection()
+    {
+        // Cast a ray in the specified direction
+        Vector3 vec = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+        Ray ray = new Ray(vec, transform.TransformDirection(transform.forward));
+        RaycastHit hit;
+
+        // Perform the raycast and check if it hits an obstacle
+        if (Physics.Raycast(ray, out hit, 5f))
+        {
+            if (hit.collider.tag == "Obstacle")
+            {
+                Debug.Log(hit.collider.tag);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, out _, 0.1f);
+    }
+
+    /*
     private void JumpOrDuck()
     {
         // Implement logic to jump or duck if stuck between obstacles
@@ -175,12 +191,6 @@ public class EscapistMovement : MonoBehaviour
             StartDucking();
         }
     }
-
-    private bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, out _, 0.1f);
-    }
-
     private void StartDucking()
     {
         if (isDucking) return;
@@ -201,4 +211,5 @@ public class EscapistMovement : MonoBehaviour
         box.height = 2; // Return to the normal height
         box.center = new Vector3(box.center.x, 1f, box.center.z); // Reset the collider center
     }
+     */
 }

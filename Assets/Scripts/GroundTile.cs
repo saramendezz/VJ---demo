@@ -63,8 +63,9 @@ public class GroundTile : MonoBehaviour
         int obstacleSpawnIndex = Random.Range(1, 4);
         Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
 
-        int numObs = Random.Range(1, 3);
+        int numObs = Random.Range(2, 4);
         int countArrowPrefab = 0;
+        int jumpPosition = -1;
         for (int i = 0; i < numObs; i++)
         {
             int randomObs = Random.Range(1, 6);
@@ -74,6 +75,7 @@ public class GroundTile : MonoBehaviour
             {   
                 case 1:
                     Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
+                    jumpPosition = obstacleSpawnIndex;
                     break;
                 case 2:
                     Instantiate(obstaclePrefab02, spawnPoint.position, transform.rotation, transform);
@@ -97,7 +99,7 @@ public class GroundTile : MonoBehaviour
             if (obstacleSpawnIndex == 4) obstacleSpawnIndex = 1;
             spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
         }
-        freeLine = obstacleSpawnIndex;
+        freeLine = jumpPosition == -1 ? obstacleSpawnIndex : jumpPosition;
         //Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
     }
 

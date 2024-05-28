@@ -16,8 +16,9 @@ public class PlayerMovement : MonoBehaviour
     public PlayableDirector timeline;
     public CapsuleCollider box;
     public AnimationCurve curve;
+    public MainMenu menu;
 
-    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0001f, fowardSpeedMult = 0.0003f;
+    private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0002f, fowardSpeedMult = 0.0003f;
 
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private bool isGrounded = true, isGodMode;
@@ -192,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Animator.SetTrigger("setDie");
         alive = false;
-        Invoke("Restart", 1); // Delay before restarting
+        Invoke("Restart", 2); // Delay before restarting
         Time.timeScale = 1;
     }
 
@@ -277,6 +278,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isHit = true;
             subsSpeed = speed;
+            menu.incrementSlow();
             speed -= 3;
         }
     }

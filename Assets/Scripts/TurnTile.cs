@@ -6,7 +6,7 @@ public class TurnTile : MonoBehaviour
     PlayerMovement playerMovement;
     EscapistMovement escapistMovement;
     CameraFollow cameraFollow;
-    private bool isInside, nextRight;
+    private bool isInside, nextRight, userMoveRight;
     private Directions currentDirection;
     private Directions nextDirection;
 
@@ -19,6 +19,7 @@ public class TurnTile : MonoBehaviour
         cameraFollow = GameObject.FindObjectOfType<CameraFollow>();
         groundSpawner.changeDirection(0);
         nextRight = Random.Range(0, 2) == 0 ? true : false;
+        userMoveRight = nextRight;
         switch (playerMovement.getCurrentDirection())
         {
             case 0:
@@ -109,6 +110,7 @@ public class TurnTile : MonoBehaviour
         {
             isInside = false;
             playerMovement.setInsideTurn(false);
+            if (userMoveRight != nextRight) playerMovement.Die();
             groundSpawner.SpawnTile();
             Destroy(gameObject, 2);
         }
@@ -121,6 +123,7 @@ public class TurnTile : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                userMoveRight = true;
                 groundSpawner.endDoubleDirection(0);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
                 playerMovement.rotatePlayer(90f);
@@ -150,6 +153,7 @@ public class TurnTile : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                userMoveRight = true;
                 groundSpawner.endDoubleDirection(1);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
                 playerMovement.rotatePlayer(-90f);

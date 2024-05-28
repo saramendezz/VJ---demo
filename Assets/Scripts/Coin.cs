@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     public float turnSpeed = 90f;
+    MainMenu menu;
     private void OnTriggerEnter(Collider other)
     {
         
@@ -15,14 +14,15 @@ public class Coin : MonoBehaviour
         }
 
         //Add to the player's score
-        GameManager.inst.IncrementScore();
+        //GameManager.inst.IncrementScore();
+        menu.incrementScore();
 
         //Destroy the coin
         Destroy(gameObject);
     }
     void Start()
     {
-
+        menu = GameObject.FindObjectOfType<MainMenu>();
     }
 
     // Update is called once per frame
