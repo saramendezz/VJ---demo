@@ -21,7 +21,7 @@ public class GroundTile : MonoBehaviour
         pMovement = GameObject.FindObjectOfType<PlayerMovement>();
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
         //SpawnObstacle();
-        SpawnCoins();
+        // SpawnCoins();
     }
 
     private void OnTriggerExit(Collider other)
@@ -39,6 +39,7 @@ public class GroundTile : MonoBehaviour
         {
             // Debug.Log("Trigger Entered: " + other.gameObject.name);
             eMovement.setDesiredLaneEsc(freeLine-1);
+            SpawnCoins();
         }
         else if (other.gameObject.name == "Player")
         {
@@ -117,22 +118,26 @@ public class GroundTile : MonoBehaviour
 
     public GameObject coinPrefab;
 
-    void SpawnCoins()
+    public void SpawnCoins()
     {
         int coinsToSpawn = 10;
         float spacing = 1.0f;
 
         for (int i = 0; i < coinsToSpawn; i++)
         {
-            int coinSpawnIndex = Random.Range(1, 4);
+            int coinSpawnIndex = 4;//Random.Range(1, 4);
             Transform spawnPoint = transform.GetChild(coinSpawnIndex);
 
             Vector3 coinPosition = spawnPoint.position;
-            coinPosition.z += i * spacing;
+            coinPosition.x += Random.Range(-2.5f * spacing, 2.5f * spacing);// i * spacing;
+            coinPosition.z += Random.Range(-2.5f * spacing, 2.5f * spacing);// i * spacing;
+            coinPosition.y = 0.5f;
+            Vector3 spawnPosition = spawnPoint.position;
+            spawnPosition.y += 3.0f;
+            GameObject tmp = Instantiate(coinPrefab, eMovement.transform.position, transform.rotation, transform);
+            // coinPosition = new Vector3(i * spacing, i * spacing, 0);
 
-            if (coinSpawnIndex == 1) coinPosition.x = spawnPoint.position.x;
-            else if (coinSpawnIndex == 3) coinPosition.x = spawnPoint.position.x;
-            Instantiate(coinPrefab, coinPosition, transform.rotation, transform);
+            tmp.GetComponent<Coin>().setPosition(coinPosition);
         }
     }
 }
