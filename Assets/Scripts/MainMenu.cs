@@ -30,6 +30,7 @@ public class MainMenu : MonoBehaviour
     {
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(true);
+        SceneManager.LoadScene(1);
     }
     public void openControls()
     {
@@ -68,5 +69,10 @@ public class MainMenu : MonoBehaviour
     public void exitGame()
     {
         SceneManager.LoadScene(1); // Cambia a la escena con el índice 1
+    }
+
+    public void goBack() 
+    {
+        SceneManager.LoadScene(0);
     }
 }
