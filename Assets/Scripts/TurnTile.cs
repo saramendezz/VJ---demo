@@ -153,7 +153,7 @@ public class TurnTile : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                userMoveRight = true;
+                userMoveRight = false;
                 groundSpawner.endDoubleDirection(1);
                 playerMovement.setMiddlePosition(transform.GetChild(0).transform.position);
                 playerMovement.rotatePlayer(-90f);

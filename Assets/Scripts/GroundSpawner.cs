@@ -10,7 +10,7 @@ public class GroundSpawner : MonoBehaviour
     public GameObject groundTurn;
     public GameObject groundTurnL;
     public GameObject groundTurnR;
-    private int currentId, countId;
+    private int currentId, countId, currentFreeLine;
     private const int MAX_NUM_GROUND = 3, MAX_NUM_ITER = 10; 
     Vector3 nextSpawnPoint, nextDoblePoint;
 
@@ -48,10 +48,12 @@ public class GroundSpawner : MonoBehaviour
             {
                 case 1:
                     tmp = Instantiate(groundTile001, nextSpawnPoint, currentRotation);
+                    tmp.GetComponent<GroundTile>().SpawnObstacle(currentFreeLine);
                     // spawnObstacle(tmp);
                     break;
                 case 2:
                     tmp = Instantiate(groundTile002, nextSpawnPoint, currentRotation);
+                    tmp.GetComponent<GroundTile>().SpawnObstacle(currentFreeLine);
                     //spawnObstacle(tmp);
                     break;
                 default:
@@ -64,10 +66,12 @@ public class GroundSpawner : MonoBehaviour
                 {
                     case 1:
                         tmp2 = Instantiate(groundTile001, nextDoblePoint, currentDobleRotation);
+                        tmp2.GetComponent<GroundTile>().SpawnObstacle(currentFreeLine);
                         //spawnObstacle(tmp2);
                         break;
                     case 2:
                         tmp2 = Instantiate(groundTile002, nextDoblePoint, currentDobleRotation);
+                        tmp2.GetComponent<GroundTile>().SpawnObstacle(currentFreeLine);
                         //spawnObstacle(tmp2);
                         break;
                     default:
@@ -85,10 +89,13 @@ public class GroundSpawner : MonoBehaviour
             if (currentId == MAX_NUM_GROUND) currentId = 1;
             countId = 0;
         }
+        int newFreeLine = Random.Range(1, 4);
+        while (newFreeLine == currentFreeLine) newFreeLine = Random.Range(1, 4);
+        currentFreeLine = newFreeLine;
     }
     void Start()
     {
-        currentId = 1; countId = 2;
+        currentId = 1; countId = 2; currentFreeLine = 2;
         currentRotation = Quaternion.identity;
         isDoubleDirection = false;
         GameObject tmp;

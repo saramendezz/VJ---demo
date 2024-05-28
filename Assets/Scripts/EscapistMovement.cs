@@ -1,37 +1,38 @@
 using System.Security.Cryptography;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class EscapistMovement : MonoBehaviour
 {
     public float laneDistance = 2; // Distance between lanes
-    public float jumpForce = 7f;
     public float speed = 6;
     public Rigidbody rb;
     public CapsuleCollider box;
+    private float rayRange;
 
     private readonly float fowardSpeedMult = 0.00035f;
 
+    private float jumpForce;
     private int desiredLane = 1; // 0: left, 1: middle, 2: right
     private Animator m_Animator;
 
     bool startState;
-    private bool isDucking = false;
-    private float duckTime = 1.0f; // Time to stay ducked
-    private float duckTimer = 0;
-
-
-    private bool isRotating = false;
 
     private Directions currentDirection;
     private Vector2 defaultXZposition;
     private Quaternion desiredRotation;
     private float curvePtr, curveSpeed;
+    private bool isJumping, isJumpAnim, isGrounded, isGoingDown; 
+    private float bottomCoordStart;
+    private float offsetJumpAnimation;
+    private bool isRotating;
 
     public AnimationCurve curve;
 
     private void Start()
     {
+        box = GetComponent<CapsuleCollider>();
         startState = true;
         m_Animator = GetComponent<Animator>();
         
@@ -40,6 +41,10 @@ public class EscapistMovement : MonoBehaviour
 
         currentDirection = Directions.FOWARD;
         defaultXZposition = new Vector2(0, 0);
+        jumpForce = 5f;
+        isJumping = false; isJumping = false; isGoingDown = false; isGrounded = true; isJumpAnim = false;
+        isRotating = false;
+        rayRange = 5f;
     }
 
     void FixedUpdate()
@@ -77,11 +82,35 @@ public class EscapistMovement : MonoBehaviour
         if (startState) return;
 
         // Handle ducking timer
-        if (DetectObstacleInDirection())
+        if (!isRotating)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            if (DetectObstacleInDirection() && isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                m_Animator.SetTrigger("startJumping");
+                isJumping = true; isJumpAnim = true;
+                isGrounded = false;
+                isGoingDown = false;
+                bottomCoordStart = box.bounds.center.y - box.bounds.extents.y;
+            }
+            else if (isJumping)
+            {
+                offsetJumpAnimation = (box.bounds.center.y - box.bounds.extents.y) - bottomCoordStart;
+                //isGrounded = (box.bounds.center.y - box.bounds.extents.y) < bottomCoordStart + 0.1 && (box.bounds.center.y - box.bounds.extents.y) > bottomCoordStart - 0.5;
+                if (offsetJumpAnimation > 1.0f) isGoingDown = true;
+                if (offsetJumpAnimation < 0.5f && isGoingDown && isJumpAnim)
+                {
+                    isJumpAnim = false;
+                }
+                if (offsetJumpAnimation < 0.01f && isGoingDown)
+                {
+                    isGoingDown = false;
+                    isGrounded = true;
+                    isJumping = false;
+                }
+            }
         }
-        if (isRotating) RotateSmoothly();
+        else RotateSmoothly();
     }
 
     float GetLanePosition()
@@ -153,63 +182,26 @@ public class EscapistMovement : MonoBehaviour
 
     private bool DetectObstacleInDirection()
     {
-        // Cast a ray in the specified direction
-        Vector3 vec = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        Ray ray = new Ray(vec, transform.TransformDirection(transform.forward));
-        RaycastHit hit;
+        Vector3 direction = Vector3.forward;
+        Vector3 point = transform.position;
+        point.y += 0.5f;
+        Ray theRay = new Ray(point, transform.TransformDirection(direction* rayRange));
+        //Debug.Log(theRay);
+        //Debug.DrawRay(point, transform.TransformDirection(direction * rayRange));
 
-        // Perform the raycast and check if it hits an obstacle
-        if (Physics.Raycast(ray, out hit, 5f))
+        if (Physics.Raycast(theRay, out RaycastHit hit, rayRange))
         {
             if (hit.collider.tag == "Obstacle")
             {
-                Debug.Log(hit.collider.tag);
+                //Debug.Log(hit.collider.tag);
                 return true;
             }
         }
-
         return false;
     }
 
-
-    private bool IsGrounded()
+    public int getDesiredLine()
     {
-        return Physics.Raycast(transform.position, Vector3.down, out _, 0.1f);
+        return desiredLane;
     }
-
-    /*
-    private void JumpOrDuck()
-    {
-        // Implement logic to jump or duck if stuck between obstacles
-        if (IsGrounded())
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            m_Animator.SetTrigger("startJumping");
-        }
-        else
-        {
-            StartDucking();
-        }
-    }
-    private void StartDucking()
-    {
-        if (isDucking) return;
-
-        Debug.Log("Start Ducking");
-        isDucking = true;
-        duckTimer = 0;
-        m_Animator.SetTrigger("startDucking");
-        box.height = 1; // Assuming the normal height is 2
-        box.center = new Vector3(box.center.x, 0.5f, box.center.z); // Adjust the collider center
-    }
-
-    private void StopDucking()
-    {
-        Debug.Log("Stop Ducking");
-        isDucking = false;
-        m_Animator.ResetTrigger("startDucking");
-        box.height = 2; // Return to the normal height
-        box.center = new Vector3(box.center.x, 1f, box.center.z); // Reset the collider center
-    }
-     */
 }

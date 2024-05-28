@@ -20,7 +20,7 @@ public class GroundTile : MonoBehaviour
         eMovement = GameObject.FindObjectOfType<EscapistMovement>();
         pMovement = GameObject.FindObjectOfType<PlayerMovement>();
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
-        SpawnObstacle();
+        //SpawnObstacle();
         SpawnCoins();
     }
 
@@ -57,50 +57,62 @@ public class GroundTile : MonoBehaviour
 
     }
 
-    void SpawnObstacle()
+    public void SpawnObstacle(int iniPosition)
     {
-        //Choose random point to spawn the obstacle
-        int obstacleSpawnIndex = Random.Range(1, 4);
-        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+        Transform spawnPoint = transform.GetChild(iniPosition).transform;
 
         int numObs = Random.Range(2, 4);
-        int countArrowPrefab = 0;
-        int jumpPosition = -1;
-        for (int i = 0; i < numObs; i++)
+        int jumpPosition = 1;
+
+        if (numObs == 3)
         {
-            int randomObs = Random.Range(1, 6);
-            if (countArrowPrefab == 2 && (randomObs == 3 || randomObs == 4)) randomObs = 5;
-            //Spawn the obstacle at the position
+            int randomObs = Random.Range(1, 3);
             switch (randomObs)
-            {   
+            {
                 case 1:
                     Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
-                    jumpPosition = obstacleSpawnIndex;
+                    break;
+                case 2:
+                    Instantiate(obstaclePrefab02, spawnPoint.position, transform.rotation, transform);
+                    break;
+                default:
+                    break;
+            }
+            jumpPosition = iniPosition;
+            ++iniPosition;
+            if (iniPosition == 4) iniPosition = 1;
+            spawnPoint = transform.GetChild(iniPosition).transform;
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            int randomObs = Random.Range(1, 6);
+            //Spawn the obstacle at the position
+            switch (randomObs)
+            {
+                case 1:
+                    Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
                     break;
                 case 2:
                     Instantiate(obstaclePrefab02, spawnPoint.position, transform.rotation, transform);
                     break;
                 case 3:
                     Instantiate(obstaclePrefab03, spawnPoint.position, transform.rotation, transform);
-                    ++countArrowPrefab; 
                     break;
                 case 4:
                     Instantiate(obstaclePrefab04, spawnPoint.position, transform.rotation, transform);
-                    ++countArrowPrefab;
                     break;
                 case 5:
                     Instantiate(obstaclePrefab05, spawnPoint.position, transform.rotation, transform);
                     break;
                 default:
-                    Instantiate(obstaclePrefab01, spawnPoint.position, transform.rotation, transform);
                     break;
             }
-            ++obstacleSpawnIndex;
-            if (obstacleSpawnIndex == 4) obstacleSpawnIndex = 1;
-            spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+            ++iniPosition;
+            if (iniPosition == 4) iniPosition = 1;
+            spawnPoint = transform.GetChild(iniPosition).transform;
         }
-        freeLine = jumpPosition == -1 ? obstacleSpawnIndex : jumpPosition;
-        //Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
+        freeLine = numObs == 2 ? iniPosition : jumpPosition;
     }
 
     public GameObject coinPrefab;

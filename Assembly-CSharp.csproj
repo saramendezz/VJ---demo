@@ -68,8 +68,9 @@
     <Compile Include="Assets\Scripts\TurnTileR.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\MainMenuMusic.cs" />
+    <Compile Include="Assets\Scripts\MusicMenu.cs" />
     <Compile Include="Assets\Scripts\GroundSpawner.cs" />
+    <Compile Include="Assets\Scripts\CreditsCanva.cs" />
     <Compile Include="Assets\Scripts\TurnTile.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SpawnTile.cs" />

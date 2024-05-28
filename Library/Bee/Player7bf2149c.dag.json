@@ -252,18 +252,6 @@
       "DebugActionIndex": 8
     },
     {
-      "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/resources.assets.resS",
-      "DisplayName": "Copying resources.assets.resS",
-      "ActionType": "CopyFiles",
-      "Inputs": [
-        "Library/PlayerDataCache/Win64/Data/resources.assets.resS"
-      ],
-      "Outputs": [
-        "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/resources.assets.resS"
-      ],
-      "DebugActionIndex": 9
-    },
-    {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/Resources/unity_builtin_extra",
       "DisplayName": "Copying unity_builtin_extra",
       "ActionType": "CopyFiles",
@@ -273,7 +261,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/Resources/unity_builtin_extra"
       ],
-      "DebugActionIndex": 10
+      "DebugActionIndex": 9
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/RuntimeInitializeOnLoads.json",
@@ -285,7 +273,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/RuntimeInitializeOnLoads.json"
       ],
-      "DebugActionIndex": 11
+      "DebugActionIndex": 10
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/ScriptingAssemblies.json",
@@ -297,7 +285,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/ScriptingAssemblies.json"
       ],
-      "DebugActionIndex": 12
+      "DebugActionIndex": 11
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.assets",
@@ -309,7 +297,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.assets"
       ],
-      "DebugActionIndex": 13
+      "DebugActionIndex": 12
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.assets.resS",
@@ -321,7 +309,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.assets.resS"
       ],
-      "DebugActionIndex": 14
+      "DebugActionIndex": 13
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.resource",
@@ -333,7 +321,7 @@
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets0.resource"
       ],
-      "DebugActionIndex": 15
+      "DebugActionIndex": 14
     },
     {
       "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets1.assets",
@@ -344,6 +332,18 @@
       ],
       "Outputs": [
         "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets1.assets"
+      ],
+      "DebugActionIndex": 15
+    },
+    {
+      "Annotation": "CopyFiles C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets1.assets.resS",
+      "DisplayName": "Copying sharedassets1.assets.resS",
+      "ActionType": "CopyFiles",
+      "Inputs": [
+        "Library/PlayerDataCache/Win64/Data/sharedassets1.assets.resS"
+      ],
+      "Outputs": [
+        "C:/Users/roger/repos/fib-upc/testBuild/Demo_Data/sharedassets1.assets.resS"
       ],
       "DebugActionIndex": 16
     },
@@ -364,7 +364,7 @@
       "DisplayName": "Writing boot.config_tyr4.info",
       "ActionType": "WriteFile",
       "PayloadOffset": 83,
-      "PayloadLength": 15843,
+      "PayloadLength": 15847,
       "PayloadDebugContentSnippet": "{\"System.Object\":null,\"Bee.Tun",
       "Inputs": [],
       "Outputs": [
@@ -387,7 +387,6 @@
         "Library/PlayerDataCache/Win64/Data/level1",
         "Library/PlayerDataCache/Win64/Data/level1.resS",
         "Library/PlayerDataCache/Win64/Data/resources.assets",
-        "Library/PlayerDataCache/Win64/Data/resources.assets.resS",
         "Library/PlayerDataCache/Win64/Data/Resources/unity_builtin_extra",
         "Library/PlayerDataCache/Win64/Data/RuntimeInitializeOnLoads.json",
         "Library/PlayerDataCache/Win64/Data/ScriptingAssemblies.json",
@@ -395,6 +394,7 @@
         "Library/PlayerDataCache/Win64/Data/sharedassets0.assets.resS",
         "Library/PlayerDataCache/Win64/Data/sharedassets0.resource",
         "Library/PlayerDataCache/Win64/Data/sharedassets1.assets",
+        "Library/PlayerDataCache/Win64/Data/sharedassets1.assets.resS",
         "Library/PlayerDataCache/Win64/Data/sharedassets1.resource",
         "C:/Program Files/Unity/Hub/Editor/2022.3.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.AIModule.dll",
         "C:/Program Files/Unity/Hub/Editor/2022.3.3f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.ARModule.dll",
@@ -1737,7 +1737,7 @@
       "Annotation": "WriteText Library/Bee/artifacts/WinPlayerBuildProgram/Data/app.info",
       "DisplayName": "Writing app.info",
       "ActionType": "WriteFile",
-      "PayloadOffset": 16015,
+      "PayloadOffset": 16019,
       "PayloadLength": 19,
       "PayloadDebugContentSnippet": "DefaultCompany\nDemo",
       "Inputs": [],

@@ -10,13 +10,14 @@ enum Directions
 public class PlayerMovement : MonoBehaviour
 {
     public float laneDistance = 2; // distance between lanes
-    public float jumpForce = 7f;
+    private float jumpForce;
     public float speed = 6;
     public Rigidbody rb;
     public PlayableDirector timeline;
     public CapsuleCollider box;
     public AnimationCurve curve;
-    public MainMenu menu;
+    public MusicMenu musicMenu;
+    public AudioClip runingSound;
 
     private readonly float timeStartSpeed = 1, timeSpeedMult = 0.0002f, fowardSpeedMult = 0.0003f;
 
@@ -30,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     private Directions currentDirection;
     private Vector2 defaultXZposition;
     MainMenu mainMenu;
+    private AudioSource soundPlayer;
+    private float rayRange;
+    EscapistMovement escapistMovement;
 
     //test smooth rotation
     private Quaternion desiredRotation;
@@ -54,6 +58,13 @@ public class PlayerMovement : MonoBehaviour
         desiredRotation = Quaternion.identity;
         subsSpeed = speed;
         mainMenu = GameObject.FindObjectOfType<MainMenu >();
+        soundPlayer = gameObject.AddComponent<AudioSource>();
+        soundPlayer.clip = runingSound;
+        soundPlayer.loop = true;
+        soundPlayer.volume = 0.5f;
+        rayRange = 5f;
+        escapistMovement = GameObject.FindObjectOfType<EscapistMovement>();
+        jumpForce = 5f;
     }
 
     void FixedUpdate()
@@ -101,15 +112,45 @@ public class PlayerMovement : MonoBehaviour
     {
         if (startState && Input.GetKeyDown(KeyCode.P))
         {
+            musicMenu.startRuningMusic();
             mainMenu.startGameFromPlayer();
             timeline.Play();
         }
         bool pActive = false;
-        if (isGodMode && Input.GetKeyDown(KeyCode.G))
+        if (isGodMode)
         {
-            mainMenu.exitGodMode();
-            isGodMode = false;
-            pActive = true;
+            if  (Input.GetKeyDown(KeyCode.G))
+            {
+                mainMenu.exitGodMode();
+                isGodMode = false;
+                pActive = true;
+            }
+            if (DetectObstacleInDirection() && isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                m_Animator.SetTrigger("startJumping");
+                isJumping = true; isJumpAnim = true;
+                isGrounded = false;
+                isGoingDown = false;
+                bottomCoordStart = box.bounds.center.y - box.bounds.extents.y;
+            }
+            else if (isJumping)
+            {
+                offsetJumpAnimation = (box.bounds.center.y - box.bounds.extents.y) - bottomCoordStart;
+                //isGrounded = (box.bounds.center.y - box.bounds.extents.y) < bottomCoordStart + 0.1 && (box.bounds.center.y - box.bounds.extents.y) > bottomCoordStart - 0.5;
+                if (offsetJumpAnimation > 1.0f) isGoingDown = true;
+                if (offsetJumpAnimation < 0.5f && isGoingDown && isJumpAnim)
+                {
+                    isJumpAnim = false;
+                    m_Animator.SetTrigger("stopJumping");
+                }
+                if (offsetJumpAnimation < 0.01f && isGoingDown)
+                {
+                    isGoingDown = false;
+                    isGrounded = true;
+                    isJumping = false;
+                }
+            }
         }
 
         if (isRotating) RotateSmoothly();
@@ -130,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            soundPlayer.Stop();
             m_Animator.SetTrigger("startJumping");
             isJumping = true; isJumpAnim = true;
             isGrounded = false;
@@ -144,6 +186,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 isJumpAnim = false;
                 m_Animator.SetTrigger("stopJumping");
+                soundPlayer.time = 0.8f;
+                soundPlayer.Play();
             }
             if (offsetJumpAnimation < 0.01f && isGoingDown)
             {
@@ -166,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
         {
             mainMenu.setGodMode();
             isGodMode = true;
+            desiredLane = escapistMovement.getDesiredLine();
         }
 
         if (transform.position.y < -5)
@@ -193,6 +238,8 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Animator.SetTrigger("setDie");
         alive = false;
+        soundPlayer.Stop();
+        musicMenu.startDieMusic();
         Invoke("Restart", 2); // Delay before restarting
         Time.timeScale = 1;
     }
@@ -206,6 +253,8 @@ public class PlayerMovement : MonoBehaviour
     {
         startState = false;
         m_Animator.SetTrigger("startRuning");
+        soundPlayer.time = 0.8f;
+        soundPlayer.Play();
     }
 
     public void setMiddlePosition(Vector3 middlePos)
@@ -278,7 +327,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isHit = true;
             subsSpeed = speed;
-            menu.incrementSlow();
+            mainMenu.incrementSlow();
             speed -= 3;
         }
     }
@@ -293,6 +342,26 @@ public class PlayerMovement : MonoBehaviour
             isHit = false;
             speed = subsSpeed;
         }
+    }
+
+    private bool DetectObstacleInDirection()
+    {
+        Vector3 direction = Vector3.forward;
+        Vector3 point = transform.position;
+        point.y += 0.5f;
+        Ray theRay = new Ray(point, transform.TransformDirection(direction * rayRange));
+        //Debug.Log(theRay);
+        //Debug.DrawRay(point, transform.TransformDirection(direction * rayRange));
+
+        if (Physics.Raycast(theRay, out RaycastHit hit, rayRange))
+        {
+            if (hit.collider.tag == "Obstacle")
+            {
+                //Debug.Log(hit.collider.tag);
+                return true;
+            }
+        }
+        return false;
     }
 
     void Restart()
