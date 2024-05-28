@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement; // Asegúrate de añadir esta línea
 using UnityEngine.Playables;
 using UnityEngine.UIElements;
@@ -7,17 +6,21 @@ using UnityEngine.UIElements;
 public class MainMenu : MonoBehaviour
 {
     PlayerMovement playerMovement;
+<<<<<<< HEAD
     public int score, ctrSlowedTimes;
     public TextMeshProUGUI slowedTimes;
     public TextMeshProUGUI scoreText;
     public AudioClip startGameSound; // Nuevo AudioClip para el sonido al iniciar el juego
     private AudioSource audioSource; // Referencia al AudioSource
+=======
+>>>>>>> parent of 6d1da8dd (sounds)
 
     private void Start()
     {
         playerMovement = GameObject.FindObjectOfType<PlayerMovement>();
         transform.GetChild(2).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
+<<<<<<< HEAD
         score = 0;
         ctrSlowedTimes = 0;
         slowedTimes.text = "Times Slowed: " + ctrSlowedTimes;
@@ -25,6 +28,8 @@ public class MainMenu : MonoBehaviour
         scoreText.text = "Score: " + score;
         // Asegúrate de que el componente AudioSource esté agregado al GameObject
         audioSource = gameObject.AddComponent<AudioSource>();
+=======
+>>>>>>> parent of 6d1da8dd (sounds)
     }
 
     public void incrementSlow()
@@ -46,18 +51,12 @@ public class MainMenu : MonoBehaviour
     {
         playerMovement.startGame();
         transform.GetChild(1).gameObject.SetActive(false);
-
-        // Inicia la corrutina para reproducir el sonido después de un retraso
-        StartCoroutine(PlaySoundWithDelay(4f));
     }
 
     public void startGameFromPlayer()
     {
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(3).gameObject.SetActive(false);
-
-        // Inicia la corrutina para reproducir el sonido después de un retraso
-        StartCoroutine(PlaySoundWithDelay(4.5f));
     }
 
     public void openCredits()
@@ -66,7 +65,6 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(3).gameObject.SetActive(true);
         SceneManager.LoadScene(1);
     }
-
     public void openControls()
     {
         transform.GetChild(1).gameObject.SetActive(false);
@@ -85,7 +83,6 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(true);
         transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
     }
-
     public void exitGodMode()
     {
         transform.GetChild(2).gameObject.SetActive(false);
@@ -97,7 +94,6 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(2).transform.GetChild(1).gameObject.SetActive(false);
     }
-
     public void exitSlowed()
     {
         transform.GetChild(2).gameObject.SetActive(false);
@@ -108,25 +104,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1); // Cambia a la escena con el índice 1
     }
 
-    public void goBack()
+    public void goBack() 
     {
         SceneManager.LoadScene(0);
-    }
-
-    // Método para reproducir un sonido después de un retraso
-    private IEnumerator PlaySoundWithDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        PlaySound(startGameSound);
-    }
-
-    // Método para reproducir un sonido
-    private void PlaySound(AudioClip clip)
-    {
-        if (audioSource != null && clip != null)
-        {
-            audioSource.clip = clip;
-            audioSource.Play();
-        }
     }
 }

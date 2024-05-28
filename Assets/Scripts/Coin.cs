@@ -1,25 +1,42 @@
+<<<<<<< HEAD
+=======
+using System.Collections;
+using System.Collections.Generic;
+>>>>>>> parent of 6d1da8dd (sounds)
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     public float turnSpeed = 90f;
+<<<<<<< HEAD
     public AudioClip coinSound; // Nuevo AudioClip para el sonido de la moneda
 
     MainMenu menu;
+=======
+>>>>>>> parent of 6d1da8dd (sounds)
     private void OnTriggerEnter(Collider other)
     {
-        // Check if we collide with the player
+        
+        //Check if we collide with the player
         if (other.gameObject.name != "Player")
         {
             return;
         }
 
         //Add to the player's score
+<<<<<<< HEAD
         //GameManager.inst.IncrementScore();
         menu.incrementScore();
+=======
+        GameManager.inst.IncrementScore();
+>>>>>>> parent of 6d1da8dd (sounds)
 
-        // Reproduce el sonido y espera antes de destruir la moneda
-        StartCoroutine(PlaySoundAndDestroy());
+        //Destroy the coin
+        Destroy(gameObject);
+    }
+    void Start()
+    {
+
     }
     void Start()
     {
@@ -30,24 +47,5 @@ public class Coin : MonoBehaviour
     void Update()
     {
         transform.Rotate(0, 0, turnSpeed * Time.deltaTime);
-    }
-
-    // Corrutina para reproducir el sonido y destruir la moneda después de un segundo
-    private IEnumerator PlaySoundAndDestroy()
-    {
-        // Crear un nuevo GameObject para reproducir el sonido
-        GameObject tempAudioSource = new GameObject("TempAudio");
-        AudioSource audioSource = tempAudioSource.AddComponent<AudioSource>();
-        audioSource.clip = coinSound;
-        audioSource.Play();
-
-        // Destruir la moneda inmediatamente
-        Destroy(gameObject);
-
-        // Esperar hasta que el sonido termine de reproducirse
-        yield return new WaitForSeconds(audioSource.clip.length);
-
-        // Destruir el GameObject temporal
-        Destroy(tempAudioSource);
     }
 }
