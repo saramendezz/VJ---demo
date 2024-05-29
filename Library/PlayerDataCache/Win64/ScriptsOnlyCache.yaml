@@ -41,10 +41,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -159,27 +157,27 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1648}
+      Script: {instanceID: 1650}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2682}
     - Class: 114
-      Script: {instanceID: 2880}
+      Script: {instanceID: 2884}
     - Class: 114
-      Script: {instanceID: 3174}
+      Script: {instanceID: 3178}
     - Class: 114
-      Script: {instanceID: 4216}
+      Script: {instanceID: 4220}
     - Class: 114
-      Script: {instanceID: 5146}
+      Script: {instanceID: 5150}
     - Class: 114
-      Script: {instanceID: 5710}
+      Script: {instanceID: 5714}
     - Class: 114
-      Script: {instanceID: 5858}
+      Script: {instanceID: 5862}
     - Class: 114
-      Script: {instanceID: 6172}
+      Script: {instanceID: 6176}
     - Class: 114
-      Script: {instanceID: 6580}
+      Script: {instanceID: 6586}
     - Class: 114
-      Script: {instanceID: 8032}
+      Script: {instanceID: 7538}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -242,73 +240,73 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1648}
+      Script: {instanceID: 1650}
     - Class: 114
-      Script: {instanceID: 1748}
+      Script: {instanceID: 1734}
     - Class: 114
-      Script: {instanceID: 2120}
+      Script: {instanceID: 1752}
     - Class: 114
-      Script: {instanceID: 2248}
+      Script: {instanceID: 2124}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2252}
     - Class: 114
-      Script: {instanceID: 2696}
+      Script: {instanceID: 2682}
     - Class: 114
-      Script: {instanceID: 2880}
+      Script: {instanceID: 2700}
     - Class: 114
-      Script: {instanceID: 3174}
+      Script: {instanceID: 2884}
     - Class: 114
-      Script: {instanceID: 3626}
+      Script: {instanceID: 3178}
     - Class: 114
-      Script: {instanceID: 4078}
+      Script: {instanceID: 3630}
     - Class: 114
       Script: {instanceID: 4082}
     - Class: 114
-      Script: {instanceID: 4184}
+      Script: {instanceID: 4086}
     - Class: 114
-      Script: {instanceID: 4438}
+      Script: {instanceID: 4188}
     - Class: 114
-      Script: {instanceID: 4712}
+      Script: {instanceID: 4442}
     - Class: 114
-      Script: {instanceID: 4932}
+      Script: {instanceID: 4716}
     - Class: 114
-      Script: {instanceID: 5082}
+      Script: {instanceID: 4936}
     - Class: 114
-      Script: {instanceID: 5146}
+      Script: {instanceID: 5086}
     - Class: 114
-      Script: {instanceID: 5182}
+      Script: {instanceID: 5150}
     - Class: 114
-      Script: {instanceID: 5240}
+      Script: {instanceID: 5186}
     - Class: 114
-      Script: {instanceID: 5520}
+      Script: {instanceID: 5244}
     - Class: 114
-      Script: {instanceID: 5710}
+      Script: {instanceID: 5524}
     - Class: 114
-      Script: {instanceID: 5858}
+      Script: {instanceID: 5714}
     - Class: 114
-      Script: {instanceID: 5872}
+      Script: {instanceID: 5862}
     - Class: 114
-      Script: {instanceID: 6172}
+      Script: {instanceID: 5876}
     - Class: 114
-      Script: {instanceID: 6206}
+      Script: {instanceID: 6176}
     - Class: 114
-      Script: {instanceID: 6250}
+      Script: {instanceID: 6210}
     - Class: 114
-      Script: {instanceID: 6580}
+      Script: {instanceID: 6254}
     - Class: 114
-      Script: {instanceID: 6680}
+      Script: {instanceID: 6308}
     - Class: 114
-      Script: {instanceID: 6842}
+      Script: {instanceID: 6586}
     - Class: 114
-      Script: {instanceID: 7546}
+      Script: {instanceID: 6686}
     - Class: 114
-      Script: {instanceID: 7814}
+      Script: {instanceID: 6848}
     - Class: 114
-      Script: {instanceID: 7914}
+      Script: {instanceID: 7554}
     - Class: 114
-      Script: {instanceID: 8028}
+      Script: {instanceID: 7822}
     - Class: 114
-      Script: {instanceID: 8036}
+      Script: {instanceID: 7922}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -348,6 +346,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI
     namespaceName: UnityEngine.UI
     className: Image
+  - hash:
+      serializedVersion: 2
+      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: GameManager
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -1082,6 +1086,12 @@ ScriptsOnlyBuild:
     className: TurnTileL
   - hash:
       serializedVersion: 2
+      Hash: ced2ef3d5550a4e1d0dc19728b773aeb
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Coin
+  - hash:
+      serializedVersion: 2
       Hash: f4f39b64f410b0cd98b49df4bad0eb7e
     assemblyName: Unity.TextMeshPro
     namespaceName: TMPro
@@ -1274,6 +1284,12 @@ ScriptsOnlyBuild:
     className: StateMachine
   - hash:
       serializedVersion: 2
+      Hash: c5ccb6e7fd38a119c81243dc12a25afc
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CreditsMusic
+  - hash:
+      serializedVersion: 2
       Hash: e0959e6b1ac2cd5e8efb65362252ce93
     assemblyName: Unity.Postprocessing.Runtime
     namespaceName: UnityEngine.Rendering.PostProcessing
@@ -1338,24 +1354,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: ced2ef3d5550a4e1d0dc19728b773aeb
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: Coin
-  - hash:
-      serializedVersion: 2
-      Hash: c5ccb6e7fd38a119c81243dc12a25afc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: CreditsMusic
-  - hash:
-      serializedVersion: 2
-      Hash: 2194a0f19cc52be2aff0967a6e1e06fc
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: GameManager
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
