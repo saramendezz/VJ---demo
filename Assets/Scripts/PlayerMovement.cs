@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     private float rayRange;
     EscapistMovement escapistMovement;
 
+    private float playerScore;
+
     //test smooth rotation
     private Quaternion desiredRotation;
     private float curvePtr, curveSpeed;
@@ -66,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         rayRange = 5f;
         escapistMovement = GameObject.FindObjectOfType<EscapistMovement>();
         jumpForce = 5f;
+        playerScore = 0;
     }
 
     void FixedUpdate()
@@ -103,6 +106,9 @@ public class PlayerMovement : MonoBehaviour
 
         speed += fowardSpeedMult;
         subsSpeed += fowardSpeedMult;
+
+        playerScore += 2 * Time.fixedDeltaTime * currentTimeSpeed;
+        mainMenu.incrementScoreTime((int)playerScore);
     }
 
     void Update()

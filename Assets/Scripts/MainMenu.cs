@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement; // Asegúrate de añadir esta línea
 public class MainMenu : MonoBehaviour
 {
     PlayerMovement playerMovement;
-    public int score, ctrSlowedTimes;
+    public int score, ctrSlowedTimes, scoreTime;
     public TextMeshProUGUI slowedTimes;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreTimeText;
     public MusicMenu musicMenu;
     public AudioClip soundFx;
     public AudioClip startBtn;
@@ -22,9 +23,11 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(4).gameObject.SetActive(false);
         score = 0;
         ctrSlowedTimes = 0;
+        scoreTime = 0;
         slowedTimes.text = "Times Slowed: " + ctrSlowedTimes;
         slowedTimes.color = Color.gray;
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Coins: " + score;
+        scoreTimeText.text = "Time Score: " + scoreTime;
 
         soundPlayer = gameObject.AddComponent<AudioSource>();
         soundPlayer.volume = 1.0f;
@@ -44,8 +47,14 @@ public class MainMenu : MonoBehaviour
     public void incrementScore()
     {
         ++score;
-        scoreText.text = "Score: " + score;
+        scoreText.text = "Coins: " + score;
 
+    }
+
+    public void incrementScoreTime(int incrm)
+    {
+        scoreTime += incrm;
+        scoreTimeText.text = "Time Score: " + incrm;
     }
 
     public void startGame()
